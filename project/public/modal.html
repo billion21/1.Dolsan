@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Modal</title>
+</head>
+
+<body>
+  <div id="container">
+    <h2>Modal Test</h2>
+    <script>
+      function OpenModal() {
+        const modal = document.getElementById("modal")
+        const btnModal = document.getElementById("btn-modal")
+        btnModal.addEventListener("click", e => {
+          modal.style.display = "flex"
+        })
+      }
+    </script>
+    <button id="btn-modal" onclick="OpenModal()">열기</button>
+    <div id="lorem-ipsum"></div>
+  </div>
+
+  <!-- 여기부터 모달 -->
+  <div id="modal" class="modal-overlay">
+    <div class="modal-window" id="modal-window1">
+      <div class="title" id="modalTitle">
+      </div>
+      <div class="close-area">
+        <script>
+          const closeBtn = modal.querySelector(".close-area")
+          closeBtn.addEventListener("click", e => {
+            modal.style.display = "none"
+          })
+          window.addEventListener("keyup", e => {
+            if (modal.style.display === "flex" && e.key === "Escape") {
+              modal.style.display = "none"
+            }
+          })
+        </script>X
+      </div>
+      <div class="content">
+        <div class="tabmenu out-tabmenu">
+          <ul>
+            <!--  Schedule list Component  -->
+            <li id="tab1" class="btnCon">
+              <input type="radio" name="tabmenu" id="tabmenu1" style="display: none;" class="menu-input" checked>
+              <label for="tabmenu1" class="menu-label">예약 목록</label>
+              <div class="tabCon">
+                <div class="scrollbar">
+                  <table style="width: 430px">
+                    <thead class="column" style="position: sticky; top: 0; z-index: 1;">
+                      <tr>
+                        <th style="width: 10%; align-content: center;">
+                          <p style="font-size: 12px;">선택</p>
+                        </th>
+                        <th style="width: 10%; text-align: center;">
+                          <p style="font-size: 12px;">번호</p>
+                        </th>
+                        <th style="width: 30%;">등록일</th>
+                        <th style="width: 30%;">작동 예약 시간</th>
+                        <th style="width: 20%;">ON/OFF</th>
+                      </tr>
+                    </thead>
+                    <tbody id="scheduleList" class="row">
+                    </tbody>
+                  </table>
+                </div>
+                <div id="DelSavButton">
+                  <button class="delete-button" onclick="DeleteData();">삭제</button>
+                  <button class="save-button" onclick="SaveData();">저장</button>
+                </div>
+              </div>
+            </li>
+            <!--  Schedule list Component End -->
+            <!-- 예약 추가 시작 -->
+            <li id="tab2" class="btnCon">
+              <input type="radio" name="tabmenu" id="tabmenu2" style="display: none;" class="menu-input">
+              <label for="tabmenu2" class="menu-label">예약 추가</label>
+              <div class="tabCon" id="addSchedule">
+                <table class="table-st" style="width: 440px; margin-top: 5%;" id="AddStatus">
+                  <thead class="column">
+                    <tr>
+                      <th>
+                        Mode
+                      </th>
+                      <th>
+                        설정 시간
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="ScheduleSet">
+                    <tr style="height: 30px;;">
+                      <th id="RepeatStatus" onclick="SetRepeat()" value="2" style="cursor: pointer; width: 50%;"
+                        class="RepeatStatus">반복</th>
+                      </th>
+                      <th style="width: 50%;">
+                        <label><input onclick="SetTime(this.value);" id="TimeStatus" type="time" value="00:00"></label>
+                      </th>
+                    </tr>
+                  </tbody>
+                </table>
+                <button class="save-button">추가</button>
+              </div>
+            </li>
+            <!-- 예약 추가 종료 -->
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <link href="/style.css" rel="stylesheet" type="text/css">
+  <script type="module" src="./ScehdulelistComp.js"></script>
+  <script src="./addSchedule.js"></script>
+</body>
+
+</html>

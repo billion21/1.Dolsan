@@ -1,0 +1,136 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f4f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.box {
+    font-size: 16px;
+    line-height: 1.5;
+    background: #ffffff;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    width: 90%;
+    max-width: 600px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.preset-box {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #e0e0e0;
+    margin-bottom: 20px;
+    gap: 10px;
+}
+
+.preset-box label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1 1 calc(33% - 10px);
+    justify-content: center;
+}
+
+.preset-box button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+    width: 100%;
+}
+
+.preset-box button:hover {
+    background-color: #0056b3;
+}
+
+.item-list {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.item {
+    display: flex;
+    flex-direction: column;
+    background: #fafafa;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.item-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.input-box {
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    font-size: 16px;
+    width: 100%;
+}
+
+.submit-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.submit-buttons button {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 15px 25px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    width: 100%;
+}
+
+.submit-buttons button:hover {
+    background-color: #218838;
+}
+
+@media (max-width: 600px) {
+    .preset-box {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .preset-box label {
+        flex: 1 1 100%;
+    }
+
+    .submit-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+@media (max-width: 400px) {
+    .preset-box button {
+        padding: 10px 10px;
+    }
+    .box{
+        margin-top: 56vh;
+    }
+}
