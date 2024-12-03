@@ -1,5 +1,5 @@
-const mqtt = require('mqtt');
-const client = mqtt.connect('mqtt://192.168.2.55');
+// const client = mqtt.connect('ws://192.168.2.55:1883'); // Use WebSocket connection
+const client = mqtt.connect('mqtt://192.168.2.55:8080');
 
 const inputFields = document.querySelectorAll('#box input[type="number"]');
 const presets = ['preset1', 'preset2', 'preset3'];
@@ -16,11 +16,25 @@ document.getElementById('savePreset').addEventListener('click', () => {
   const selectedPreset = document.querySelector('input[name="preset"]:checked');
   if (selectedPreset) {
     console.log('Preset selected:', selectedPreset.value);
-    const presetName = `preset${selectedPreset.value}`;
+    const presetName = `${selectedPreset.value}`;
     const settings = Array.from(inputFields).map(input => input.value);
     console.log('Settings to save:', settings);
-    localStorage.setItem(presetName, JSON.stringify(settings));
-    alert(`Settings saved to ${presetName}`);
+
+    // Fetch existing presets, update, and save
+    fetch('/api/presets')
+      .then(response => response.json())
+      .then(data => {
+        data[presetName] = settings;
+        return fetch('/api/presets', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+      })
+      .then(() => alert(`Settings saved to ${presetName}`))
+      .catch(error => console.error('Error saving presets:', error));
   } else {
     console.log('No preset selected');
     alert('Please select a preset to save.');
@@ -31,17 +45,22 @@ document.getElementById('savePreset').addEventListener('click', () => {
 presets.forEach(preset => {
   document.getElementById(preset).addEventListener('click', () => {
     console.log(`Loading settings for ${preset}`);
-    const settings = JSON.parse(localStorage.getItem(preset));
-    if (settings) {
-      console.log('Loaded settings:', settings);
-      settings.forEach((value, index) => {
-        inputFields[index].value = value;
-      });
-      currentSettings = settings; // Store the loaded settings
-    } else {
-      console.log('No settings found for this preset');
-      alert('No settings saved for this preset');
-    }
+    fetch('/api/presets')
+      .then(response => response.json())
+      .then(data => {
+        const settings = data[preset];
+        if (settings) {
+          console.log('Loaded settings:', settings);
+          settings.forEach((value, index) => {
+            inputFields[index].value = value;
+          });
+          currentSettings = settings; // Store the loaded settings
+        } else {
+          console.log('No settings found for this preset');
+          alert('No settings saved for this preset');
+        }
+      })
+      .catch(error => console.error('Error loading presets:', error));
   });
 });
 
