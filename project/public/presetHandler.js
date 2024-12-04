@@ -1,12 +1,28 @@
-const client = mqtt.connect('mqtt://192.168.2.55:9001');
+const client = mqtt.connect('ws://192.168.2.55:9001'); // Use WebSocket connection
 
 const inputFields = document.querySelectorAll('#box input[type="number"]');
 const presets = ['preset1', 'preset2', 'preset3'];
 let currentSettings = [];
+let stopRequested = false; // Flag to control stopping
+
+const startButton = document.getElementById('sendbutton');
+const stopButton = document.getElementById('stopbutton');
 
 // Connect to the MQTT broker
 client.on('connect', () => {
   console.log('Connected to MQTT broker');
+});
+
+// Stop button functionality
+stopButton.addEventListener('click', () => {
+  // console.log('Stop button clicked');
+  stopRequested = true;
+  stopButton.disabled = true; // Disable stop button
+  console.log('STOP REQUESTED', stopButton);
+  // Send OFF command to all devices
+  for (let act_id = 1; act_id <= 4; act_id++) {
+    sendMQTTCommand('DIPSW_1', act_id, 93, 3);
+  }
 });
 
 // Save current settings to a selected preset
@@ -15,7 +31,7 @@ document.getElementById('savePreset').addEventListener('click', () => {
   const selectedPreset = document.querySelector('input[name="preset"]:checked');
   if (selectedPreset) {
     console.log('Preset selected:', selectedPreset.value);
-    const presetName = `${selectedPreset.value}`;
+    const presetName = `preset${selectedPreset.value}`;
     const settings = Array.from(inputFields).map(input => input.value);
     console.log('Settings to save:', settings);
 
@@ -64,14 +80,21 @@ presets.forEach(preset => {
 });
 
 // Send MQTT command when the "Start" button is clicked
-document.getElementById('sendbutton').addEventListener('click', () => {
+startButton.addEventListener('click', () => {
   console.log('Start button clicked');
+  stopRequested = false; // Reset stop flag
+  startButton.disabled = true; // Disable start button
+  stopButton.disabled = false; // Enable stop button
   if (currentSettings.length > 0) {
     console.log('Current settings:', currentSettings);
-    sendMQTTCommands(currentSettings);
+    sendMQTTCommands(currentSettings).finally(() => {
+      startButton.disabled = false; // Re-enable start button after process
+      stopButton.disabled = false; // Re-enable stop button after process
+    });
   } else {
     console.log('No settings loaded');
     alert('No settings loaded. Please select a preset first.');
+    startButton.disabled = false; // Re-enable start button if no settings
   }
 });
 
@@ -91,12 +114,20 @@ async function sendMQTTCommands(settings) {
 
   // Process each device sequentially
   for (const device of devices) {
+    if (stopRequested) {
+      console.log('Stop requested, halting commands');
+      break;
+    }
     console.log(`Sending ON command for act_id: ${device.act_id}`);
     sendMQTTCommand('DIPSW_1', device.act_id, 91, 3); // ON
 
     // Wait for the specified time before sending the OFF command
     await new Promise(resolve => setTimeout(resolve, device.value * 1000));
 
+    if (stopRequested) {
+      console.log('Stop requested, halting commands');
+      break;
+    }
     console.log(`Sending OFF command for act_id: ${device.act_id}`);
     sendMQTTCommand('DIPSW_1', device.act_id, 93, 3); // OFF
   }

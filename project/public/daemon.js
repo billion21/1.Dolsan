@@ -1,7 +1,5 @@
-const mqtt = require('mqtt');
-const fs = require('fs');
+// const fs = require('fs');
 
-const client = mqtt.connect('mqtt://192.168.2.55');
 
 client.on('connect', () => {
   console.log('Connected to MQTT broker');
