@@ -1,5 +1,4 @@
-// const client = mqtt.connect('ws://192.168.2.55:1883'); // Use WebSocket connection
-const client = mqtt.connect('mqtt://192.168.2.55:8080');
+const client = mqtt.connect('mqtt://192.168.2.55:9001');
 
 const inputFields = document.querySelectorAll('#box input[type="number"]');
 const presets = ['preset1', 'preset2', 'preset3'];
@@ -77,7 +76,7 @@ document.getElementById('sendbutton').addEventListener('click', () => {
 });
 
 // Function to send MQTT commands
-function sendMQTTCommands(settings) {
+async function sendMQTTCommands(settings) {
   console.log('Sending MQTT commands');
   // Send tank number command
   sendMQTTCommand('DIPSW_0', 1, 93, settings[0]);
@@ -90,15 +89,17 @@ function sendMQTTCommands(settings) {
     { act_id: 4, value: settings[4] }
   ];
 
-  // Process each device
-  devices.forEach(device => {
+  // Process each device sequentially
+  for (const device of devices) {
     console.log(`Sending ON command for act_id: ${device.act_id}`);
     sendMQTTCommand('DIPSW_1', device.act_id, 91, 3); // ON
-    setTimeout(() => {
-      console.log(`Sending OFF command for act_id: ${device.act_id}`);
-      sendMQTTCommand('DIPSW_1', device.act_id, 93, 3); // OFF
-    }, device.value * 1000); // Convert seconds to milliseconds
-  });
+
+    // Wait for the specified time before sending the OFF command
+    await new Promise(resolve => setTimeout(resolve, device.value * 1000));
+
+    console.log(`Sending OFF command for act_id: ${device.act_id}`);
+    sendMQTTCommand('DIPSW_1', device.act_id, 93, 3); // OFF
+  }
 }
 
 function sendMQTTCommand(topic, act_id, opmode, pwm) {
