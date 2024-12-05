@@ -6,16 +6,39 @@ const mqtt = require('mqtt');
 const app = express();
 const PORT = 3100;
 const presetFilePath = path.join(__dirname, 'presets.json');
-const client = mqtt.connect('mqtt://192.168.2.55:9001'); // Use WebSocket connection
+const client = mqtt.connect('ws://192.168.2.55:9001', {
+    clientId: 'server_mqtt_client',
+});
+
+client.on('packetsend', (packet) => {
+    console.log('Packet sent:', packet);
+});
+
+client.on('packetreceive', (packet) => {
+    console.log('Packet received:', packet);
+});
 
 let stopRequested = false; // Flag to control stopping
 let processRunning = false; // Flag to indicate if the process is running
+let mqttConnected = false; // Flag to indicate MQTT connection status
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'ui.html'));
+});
+
+// MQTT connection event
+client.on('connect', () => {
+    console.log('MQTT client connected');
+    mqttConnected = true;
+});
+
+// MQTT error event
+client.on('error', (err) => {
+    console.error('MQTT connection error:', err);
+    mqttConnected = false;
 });
 
 // Endpoint to save presets
@@ -45,6 +68,10 @@ app.get('/api/presets', (req, res) => {
 
 // Endpoint to start the process
 app.post('/api/start', async (req, res) => {
+    if (!mqttConnected) {
+        return res.status(500).json({ message: 'MQTT client not connected' });
+    }
+
     const settings = req.body;
     console.log('Received start command with settings:', settings);
     stopRequested = false; // Reset stop flag
@@ -58,10 +85,6 @@ app.post('/api/start', async (req, res) => {
 app.post('/api/stop', (req, res) => {
     console.log('Received stop command');
     stopRequested = true;
-    // Send OFF command to all devices
-    for (let act_id = 1; act_id <= 4; act_id++) {
-        sendMQTTCommand('DIPSW_1', act_id, 93, 3);
-    }
     res.status(200).json({ message: 'Stop requested' });
 });
 
@@ -107,6 +130,11 @@ async function processCommands(settings) {
 }
 
 function sendMQTTCommand(topic, act_id, opmode, pwm) {
+    if (!mqttConnected) {
+        console.error('Cannot send MQTT command, client not connected');
+        return;
+    }
+
     const message = JSON.stringify({ act_id, opmode, pwm });
     console.log('Publishing MQTT message:', message);
     client.publish(topic, message, (err) => {
