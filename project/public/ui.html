@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Remote Control System</title>
+  <title>원격 제어 시스템</title>
   <link href="./style.css" rel="stylesheet" type="text/css">
   <script src="./mqtt.min.js"></script>
 </head>
@@ -29,27 +29,27 @@
     <div class="item-list">
       <div class="item">
         <label class="item-title" for="tank-number">수조 번호</label>
-        <input type="number" id="tank-number" class="timer-box">
+        <input type="number" id="tank-number" class="timer-box" placeholder="수조 번호 작성(1, 2, 3, 4)">
       </div>
 
       <div class="item">
         <label class="item-title" for="silo-motor-right">사일로 모터(오른쪽)</label>
-        <input type="number" id="silo-motor-right" class="timer-box">
+        <input type="number" id="silo-motor-right" class="timer-box" placeholder="초 단위 작성"> 
       </div>
 
       <div class="item">
         <label class="item-title" for="silo-motor-left">사일로 모터(왼쪽)</label>
-        <input type="number" id="silo-motor-left" class="timer-box">
+        <input type="number" id="silo-motor-left" class="timer-box" placeholder="초 단위 작성">
       </div>
 
       <div class="item">
         <label class="item-title" for="rotary-valve">로터리 밸브</label>
-        <input type="number" id="rotary-valve" class="timer-box">
+        <input type="number" id="rotary-valve" class="timer-box" placeholder="초 단위 작성">
       </div>
 
       <div class="item">
         <label class="item-title" for="blower">블로워</label>
-        <input type="number" id="blower" class="timer-box">
+        <input type="number" id="blower" class="timer-box" placeholder="초 단위 작성">
       </div>
     </div>
     
@@ -61,7 +61,6 @@
   </div>
 
   <script src="./presetHandler.js"></script>
-  <!-- <script src="./daemon.js"></script> -->
 </body>
 
 </html>
