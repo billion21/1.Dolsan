@@ -27,37 +27,84 @@
     </div>
 
     <div class="item-list">
-      <div class="item">
+      <div class="item" data-act-id="0">
         <label class="item-title" for="tank-number">수조 번호</label>
         <input type="number" id="tank-number" class="timer-box" placeholder="수조 번호 작성(1, 2, 3, 4)">
+
+        <div class="remote-buttons">
+          <button class="item-start">시작</button>
+          <button class="item-stop" disabled>정지</button>
+        </div>
       </div>
 
-      <div class="item">
+      <div class="item" data-act-id="1">
         <label class="item-title" for="silo-motor-right">사일로 모터(오른쪽)</label>
-        <input type="number" id="silo-motor-right" class="timer-box" placeholder="초 단위 작성"> 
+        <input type="number" id="silo-motor-right" class="timer-box" placeholder="초 단위 작성">
+
+        <div class="remote-buttons">
+          <button class="item-start">시작</button>
+          <button class="item-stop">정지</button>
+        </div>
       </div>
 
-      <div class="item">
+      <div class="item" data-act-id="2">
         <label class="item-title" for="silo-motor-left">사일로 모터(왼쪽)</label>
         <input type="number" id="silo-motor-left" class="timer-box" placeholder="초 단위 작성">
+
+        <div class="remote-buttons">
+          <button class="item-start">시작</button>
+          <button class="item-stop">정지</button>
+        </div>
       </div>
 
-      <div class="item">
+      <div class="item" data-act-id="3">
         <label class="item-title" for="rotary-valve">로터리 밸브</label>
         <input type="number" id="rotary-valve" class="timer-box" placeholder="초 단위 작성">
+
+        <div class="remote-buttons">
+          <button class="item-start">시작</button>
+          <button class="item-stop">정지</button>
+        </div>
       </div>
 
-      <div class="item">
+      <div class="item" data-act-id="4">
         <label class="item-title" for="blower">블로워</label>
         <input type="number" id="blower" class="timer-box" placeholder="초 단위 작성">
+
+        <div class="remote-buttons">
+          <button class="item-start">시작</button>
+          <button class="item-stop">정지</button>
+        </div>
       </div>
+
+      <div class="item" data-act-id="5">
+        <label class="item-title" for="r5">R5</label>
+        <input type="number" id="blower" class="timer-box" placeholder="초 단위 작성">
+
+        <div class="remote-buttons">
+          <button class="item-start">시작</button>
+          <button class="item-stop">정지</button>
+        </div>
+      </div>
+
+      <div class="item" data-act-id="6">
+        <label class="item-title" for="r6">R6</label>
+        <input type="number" id="blower" class="timer-box" placeholder="초 단위 작성">
+
+        <div class="remote-buttons">
+          <button class="item-start">시작</button>
+          <button class="item-stop">정지</button>
+        </div>
+      </div>
+
     </div>
-    
+
     <div class="submit-buttons">
       <button id="savePreset">저장</button>
       <button id="sendbutton">시작</button>
       <button id="stopbutton">정지</button>
     </div>
+
   </div>
 
   <script src="./presetHandler.js"></script>

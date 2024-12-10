@@ -70,7 +70,7 @@ body {
 
   .item {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     background: #fafafa;
     padding: 20px;
     border-radius: 8px;
@@ -82,6 +82,7 @@ body {
     font-weight: bold;
     margin-bottom: 10px;
     color: #333;
+    width: 30%;
   }
 
   .timer-box {
@@ -89,7 +90,7 @@ body {
     border: 1px solid #ccc;
     padding: 10px;
     font-size: 16px;
-    width: 100%;
+    width: 50%;
   }
 
   .submit-buttons {
@@ -99,8 +100,43 @@ body {
     margin-top: 30px;
   }
 
-  .submit-buttons button {
+  #stopbutton{
+    background-color: #dc3545;
+  }
+
+  #sendbutton{
     background-color: #28a745;
+  }
+  
+  #savePreset{
+    background-color: #007bff;
+  }
+
+  .item-stop{
+    background-color: #dc3545;
+  }
+
+  .item-start{
+    background-color: #28a745;
+  }
+
+  .remote-buttons{
+    display: flex;
+    flex-direction: row;
+    width: 20%;
+  }
+  
+  .remote-buttons button {
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    width: 100%;
+  }
+
+  .submit-buttons button {
     color: #fff;
     border: none;
     border-radius: 8px;
@@ -109,9 +145,6 @@ body {
     font-size: 16px;
     transition: background-color 0.3s;
     width: 100%;
-  }
-  #stopbutton{
-    background-color: #dc3545;
   }
 
   .submit-buttons button:hover {
@@ -140,3 +173,4 @@ body {
     cursor: not-allowed;
     opacity: 0.6;
 }
+

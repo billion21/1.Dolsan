@@ -85,12 +85,33 @@ app.post('/api/start', async (req, res) => {
 app.post('/api/stop', (req, res) => {
     console.log('Received stop command');
     stopRequested = true;
+    for (let act_id = 1; act_id <= 4; act_id++) {
+        sendMQTTCommand('DIPSW_1', act_id, 93, 3);
+    }
     res.status(200).json({ message: 'Stop requested' });
 });
 
 // Endpoint to check process status
 app.get('/api/check-status', (req, res) => {
     res.status(200).json({ halted: !processRunning });
+});
+
+// Endpoint to handle MQTT commands
+app.post('/api/mqtt-command', (req, res) => {
+    const { topic, act_id, opmode, pwm } = req.body;
+    if (!mqttConnected) {
+        return res.status(500).json({ message: 'MQTT client not connected' });
+    }
+
+    const message = JSON.stringify({ act_id, opmode, pwm });
+    client.publish(topic, message, (err) => {
+        if (err) {
+            console.error('Error publishing MQTT message:', err);
+            return res.status(500).json({ message: 'Error sending MQTT command' });
+        }
+        console.log('MQTT message sent:', message);
+        res.status(200).json({ message: 'MQTT command sent successfully' });
+    });
 });
 
 // Function to process commands
