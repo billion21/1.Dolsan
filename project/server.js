@@ -103,15 +103,7 @@ app.post('/api/mqtt-command', (req, res) => {
         return res.status(500).json({ message: 'MQTT client not connected' });
     }
 
-    const message = JSON.stringify({ act_id, opmode, pwm });
-    client.publish(topic, message, (err) => {
-        if (err) {
-            console.error('Error publishing MQTT message:', err);
-            return res.status(500).json({ message: 'Error sending MQTT command' });
-        }
-        console.log('MQTT message sent:', message);
-        res.status(200).json({ message: 'MQTT command sent successfully' });
-    });
+    sendMQTTCommand(topic, act_id, opmode, pwm); // OFF
 });
 
 // Function to process commands
@@ -157,6 +149,7 @@ function sendMQTTCommand(topic, act_id, opmode, pwm) {
     }
 
     const message = JSON.stringify({ act_id, opmode, pwm });
+    console.log('TOPIC:', topic);
     console.log('Publishing MQTT message:', message);
     client.publish(topic, message, (err) => {
         if (err) {
