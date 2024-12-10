@@ -6,7 +6,7 @@ const mqtt = require('mqtt');
 const app = express();
 const PORT = 3100;
 const presetFilePath = path.join(__dirname, 'presets.json');
-const client = mqtt.connect('ws://192.168.2.55:9001', {
+const client = mqtt.connect('ws://192.168.0.70:19001', {
     clientId: 'server_mqtt_client',
 });
 
@@ -98,22 +98,25 @@ app.get('/api/check-status', (req, res) => {
 
 // Endpoint to handle MQTT commands
 app.post('/api/mqtt-command', (req, res) => {
-    const { topic, act_id, opmode, pwm } = req.body;
+    let { topic, act_id, opmode, pwm } = req.body;
     if (!mqttConnected) {
         return res.status(500).json({ message: 'MQTT client not connected' });
     }
+    act_id = parseInt(act_id, 10);
 
     sendMQTTCommand(topic, act_id, opmode, pwm); // OFF
 });
 
 // Endpoint to start an individual item
 app.post('/api/start-item', (req, res) => {
-    const { actId, duration } = req.body;
+    let { actId, duration } = req.body;
     if (!mqttConnected) {
         return res.status(500).json({ message: 'MQTT client not connected' });
     }
 
-    if (actId === "0") {
+    actId = parseInt(actId, 10);
+
+    if (actId === 0) {
         sendMQTTCommand('DIPSW_0', 1, 93, duration); // Send tank number command
     } else{
         console.log(`Received start command for act_id: ${actId} with duration: ${duration}`);
