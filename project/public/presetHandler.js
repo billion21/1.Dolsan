@@ -169,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const durationInput = item.querySelector('.timer-box');
 
         if (startButton) {
-            startButton.addEventListener('click', () => {
+            startButton.addEventListener('click', async () => {
                 if (actId === "0") {
                     const tankNumberInput = item.querySelector('#tank-number');
                     const tankNumber = tankNumberInput.value;
@@ -188,12 +188,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     console.log(`Starting item with act_id: ${actId} for ${duration} seconds`);
                     sendMQTTCommand('DIPSW_1', actId, 91, 3); // Send start command
+                    await new Promise(resolve => setTimeout(resolve, duration * 1000));
 
-                    // Automatically send stop command after the specified duration
-                    setTimeout(() => {
-                        console.log(`Automatically stopping item with act_id: ${actId}`);
-                        sendMQTTCommand('DIPSW_1', actId, 93, 3); // Send stop command
-                    }, duration * 1000);
+                    console.log(`Automatically stopping item with act_id: ${actId}`);
+                    sendMQTTCommand('DIPSW_1', actId, 93, 3); // Send stop command
+
                 }
             });
         }
