@@ -106,6 +106,29 @@ app.post('/api/mqtt-command', (req, res) => {
     sendMQTTCommand(topic, act_id, opmode, pwm); // OFF
 });
 
+// Endpoint to start an individual item
+app.post('/api/start-item', (req, res) => {
+    const { actId, duration } = req.body;
+    if (!mqttConnected) {
+        return res.status(500).json({ message: 'MQTT client not connected' });
+    }
+
+    if (actId === "0") {
+        sendMQTTCommand('DIPSW_0', 1, 93, duration); // Send tank number command
+    } else{
+        console.log(`Received start command for act_id: ${actId} with duration: ${duration}`);
+        sendMQTTCommand('DIPSW_1', actId, 91, 1); // Send start command
+    
+        // Schedule stop command after the specified duration
+        setTimeout(() => {
+            console.log(`Automatically stopping item with act_id: ${actId}`);
+            sendMQTTCommand('DIPSW_1', actId, 93, 1); // Send stop command
+        }, duration * 1000);
+    }
+
+    res.status(200).json({ message: 'Item start command processed' });
+});
+
 // Function to process commands
 async function processCommands(settings) {
     console.log('Processing commands');

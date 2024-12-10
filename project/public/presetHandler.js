@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-
     // const client = mqtt.connect('ws://192.168.2.55:9001'); // Use WebSocket connection
     const inputFields = document.querySelectorAll('#box input[type="number"]');
     const presets = ['preset1', 'preset2', 'preset3'];
@@ -162,6 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Add event listeners for individual item start/stop buttons
+    // Add event listeners for individual item start/stop buttons
     document.querySelectorAll('.item').forEach(item => {
         const actId = item.getAttribute('data-act-id');
         const startButton = item.querySelector('.item-start');
@@ -169,31 +169,24 @@ document.addEventListener('DOMContentLoaded', () => {
         const durationInput = item.querySelector('.timer-box');
 
         if (startButton) {
-            startButton.addEventListener('click', async () => {
-                if (actId === "0") {
-                    const tankNumberInput = item.querySelector('#tank-number');
-                    const tankNumber = tankNumberInput.value;
-                    if (tankNumber) {
-                        console.log(`Starting tank with act_id: ${tankNumber}`);
-                        sendMQTTCommand('DIPSW_0', tankNumber, 93, tankNumber); // Send start command for tank
-                    } else {
-                        console.error('Tank number is not specified');
-                    }
-                } else {
-                    const duration = parseInt(durationInput.value, 10);
-                    if (isNaN(duration) || duration <= 0) {
-                        console.error('Invalid duration specified');
-                        return;
-                    }
-
-                    console.log(`Starting item with act_id: ${actId} for ${duration} seconds`);
-                    sendMQTTCommand('DIPSW_1', actId, 91, 3); // Send start command
-                    await new Promise(resolve => setTimeout(resolve, duration * 1000));
-
-                    console.log(`Automatically stopping item with act_id: ${actId}`);
-                    sendMQTTCommand('DIPSW_1', actId, 93, 3); // Send stop command
-
+            startButton.addEventListener('click', () => {
+                const duration = parseInt(durationInput.value, 10);
+                if (isNaN(duration) || duration <= 0) {
+                    console.error('Invalid duration specified');
+                    return;
                 }
+
+                console.log(`Starting item with act_id: ${actId} for ${duration} seconds`);
+                fetch('/api/start-item', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ actId, duration })
+                })
+                .then(response => response.json())
+                .then(data => console.log('Item start command sent:', data))
+                .catch(error => console.error('Error sending item start command:', error));
             });
         }
 
