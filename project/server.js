@@ -6,7 +6,7 @@ const mqtt = require('mqtt');
 const app = express();
 const PORT = 3100;
 const presetFilePath = path.join(__dirname, 'presets.json');
-const client = mqtt.connect('ws://192.168.0.70:19001', {
+const client = mqtt.connect('ws://192.168.2.55:9001', {
     clientId: 'server_mqtt_client',
 });
 
