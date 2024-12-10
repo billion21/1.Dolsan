@@ -95,7 +95,7 @@ body {
 
   .submit-buttons {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 15px;
     margin-top: 30px;
   }
@@ -107,7 +107,7 @@ body {
   #sendbutton{
     background-color: #28a745;
   }
-  
+
   #savePreset{
     background-color: #007bff;
   }
@@ -163,6 +163,28 @@ body {
 
     .submit-buttons {
       flex-direction: column;
+      gap: 10px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .preset-box {
+      flex-direction: row;
+      flex-wrap: nowrap;
+      gap: 15px;
+      width: 100%;
+    }
+
+    .timer-box {
+      width: 33%;
+    }
+
+    .remote-buttons {
+      width: 33%
+    }
+
+    .submit-buttons {
+      flex-direction: row;
       gap: 10px;
     }
   }

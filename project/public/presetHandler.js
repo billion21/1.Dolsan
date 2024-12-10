@@ -166,10 +166,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const actId = item.getAttribute('data-act-id');
         const startButton = item.querySelector('.item-start');
         const stopButton = item.querySelector('.item-stop');
+        const durationInput = item.querySelector('.timer-box');
 
         if (startButton) {
             startButton.addEventListener('click', () => {
-                if (actId === "0") { // Special case for tank number
+                if (actId === "0") {
                     const tankNumberInput = item.querySelector('#tank-number');
                     const tankNumber = tankNumberInput.value;
                     if (tankNumber) {
@@ -179,8 +180,20 @@ document.addEventListener('DOMContentLoaded', () => {
                         console.error('Tank number is not specified');
                     }
                 } else {
-                    console.log(`Starting item with act_id: ${actId}`);
-                    sendMQTTCommand('DIPSW_1', actId, 91, 3); // Send start command for other items
+                    const duration = parseInt(durationInput.value, 10);
+                    if (isNaN(duration) || duration <= 0) {
+                        console.error('Invalid duration specified');
+                        return;
+                    }
+
+                    console.log(`Starting item with act_id: ${actId} for ${duration} seconds`);
+                    sendMQTTCommand('DIPSW_1', actId, 91, 3); // Send start command
+
+                    // Automatically send stop command after the specified duration
+                    setTimeout(() => {
+                        console.log(`Automatically stopping item with act_id: ${actId}`);
+                        sendMQTTCommand('DIPSW_1', actId, 93, 3); // Send stop command
+                    }, duration * 1000);
                 }
             });
         }

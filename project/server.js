@@ -11,11 +11,11 @@ const client = mqtt.connect('ws://192.168.2.55:9001', {
 });
 
 client.on('packetsend', (packet) => {
-    console.log('Packet sent:', packet);
+    // console.log('Packet sent:', packet);
 });
 
 client.on('packetreceive', (packet) => {
-    console.log('Packet received:', packet);
+    // console.log('Packet received:', packet);
 });
 
 let stopRequested = false; // Flag to control stopping
@@ -149,7 +149,6 @@ function sendMQTTCommand(topic, act_id, opmode, pwm) {
     }
 
     const message = JSON.stringify({ act_id, opmode, pwm });
-    console.log('TOPIC:', topic);
     console.log('Publishing MQTT message:', message);
     client.publish(topic, message, (err) => {
         if (err) {
