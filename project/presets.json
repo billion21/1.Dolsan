@@ -1,23 +1,48 @@
 {
-  "preset1": [
-    "2",
-    "15",
-    "15",
-    "15",
-    "15"
-  ],
-  "preset2": [
-    "3",
-    "15",
-    "15",
-    "15",
-    "15"
-  ],
-  "preset3": [
-    "4",
-    "10",
-    "10",
-    "10",
-    "10"
-  ]
+  "preset1": {
+    "tankNumber": "1",
+    "siloMotorRight": "0",
+    "siloMotorRightTime": "100",
+    "siloMotorLeft": "0",
+    "siloMotorLeftTime": "0",
+    "rotaryValve": "0",
+    "rotaryValveTime": "200",
+    "blower": "0",
+    "blowerTime": "500"
+  },
+  "preset2": {
+    "tankNumber": "2",
+    "tankTime": "50",
+    "siloMotorRight": "20",
+    "siloMotorRightTime": "100",
+    "siloMotorLeft": "15",
+    "siloMotorLeftTime": "75",
+    "rotaryValve": "25",
+    "rotaryValveTime": "150",
+    "blower": "12",
+    "blowerTime": "80"
+  },
+  "preset3": {
+    "tankNumber": "3",
+    "tankTime": "50",
+    "siloMotorRight": "20",
+    "siloMotorRightTime": "100",
+    "siloMotorLeft": "15",
+    "siloMotorLeftTime": "75",
+    "rotaryValve": "25",
+    "rotaryValveTime": "150",
+    "blower": "12",
+    "blowerTime": "80"
+  },
+  "preset4": {
+    "tankNumber": "1",
+    "siloMotorRight": "10",
+    "siloMotorRightTime": "100",
+    "siloMotorLeft": "10",
+    "siloMotorLeftTime": "0",
+    "rotaryValve": "10",
+    "rotaryValveTime": "200",
+    "blower": "10",
+    "blowerTime": "300"
+  }
 }

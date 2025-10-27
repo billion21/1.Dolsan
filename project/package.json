@@ -1,7 +1,35 @@
 {
+  "name": "iot-command-scheduler",
+  "version": "1.0.0",
+  "description": "IoT Command Scheduling Server with Batch Processing",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "NODE_ENV=test jest",
+    "test:watch": "NODE_ENV=test jest --watch",
+    "test:coverage": "NODE_ENV=test jest --coverage"
+  },
   "dependencies": {
     "express": "^4.21.1",
     "mqtt": "^5.10.3",
     "pm2": "^5.4.3"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.54.2",
+    "jest": "^29.7.0",
+    "supertest": "^6.3.3"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "collectCoverageFrom": [
+      "server.js",
+      "server-testable.js"
+    ],
+    "coverageDirectory": "coverage",
+    "coverageReporters": [
+      "text",
+      "lcov",
+      "html"
+    ]
   }
 }

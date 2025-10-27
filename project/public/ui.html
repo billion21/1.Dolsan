@@ -5,76 +5,157 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>원격 제어 시스템</title>
-  <link href="./style.css" rel="stylesheet" type="text/css">
+  <link href="./style-minimal.css" rel="stylesheet" type="text/css">
   <script src="./mqtt.min.js"></script>
 </head>
 
 <body>
   <div id="box" class="box">
+    <h1>원격 제어 시스템</h1>
+
     <div class="preset-box">
-      <label>
-        <button id="preset1">프리셋 1</button>
-        <input type="radio" name="preset" value="preset1">
-      </label>
-      <label>
-        <button id="preset2">프리셋 2</button>
-        <input type="radio" name="preset" value="preset2">
-      </label>
-      <label>
-        <button id="preset3">프리셋 3</button>
-        <input type="radio" name="preset" value="preset3">
-      </label>
+      <div class="preset-load">
+        <button class="preset-btn" id="preset1">프리셋 1</button>
+        <button class="preset-btn" id="preset2">프리셋 2</button>
+        <button class="preset-btn" id="preset3">프리셋 3</button>
+        <button class="preset-btn" id="preset4">프리셋 4</button>
+      </div>
+      <div class="preset-save">
+        <span class="preset-save-label">저장 대상:</span>
+        <label class="radio-pill">
+          <input type="radio" name="preset" value="preset1" checked>
+          <span>1</span>
+        </label>
+        <label class="radio-pill">
+          <input type="radio" name="preset" value="preset2">
+          <span>2</span>
+        </label>
+        <label class="radio-pill">
+          <input type="radio" name="preset" value="preset3">
+          <span>3</span>
+        </label>
+        <label class="radio-pill">
+          <input type="radio" name="preset" value="preset4">
+          <span>4</span>
+        </label>
+      </div>
     </div>
 
     <div class="item-list">
-      <div class="item" data-act-id="0">
-        <label class="item-title" for="tank-number">수조 번호</label>
-        <input type="number" id="tank-number" class="timer-box" placeholder="수조 번호 작성(1, 2, 3, 4)">
-
-        <div class="remote-buttons">
-          <button class="item-start">ON</button>
-          <button class="item-stop" disabled>OFF</button>
+      <div class="item tank-card" data-act-id="0">
+        <div class="item-header">
+          <label class="item-title" for="tank-number">수조 번호</label>
         </div>
+        <div class="input-group">
+          <div class="input-field">
+            <label class="input-label">수조 선택</label>
+            <input type="number" id="tank-number" class="timer-box" placeholder="1-4" min="1" max="4" value="1">
+      <div class="status-box">
+        <h2 class="section-title">장치 상태</h2>
+        <div class="status-list">
+          <div class="status-item" data-act-id="2">
+            <span class="status-name">사일로(좌)</span>
+            <span class="status-indicators">
+              <span class="status-dot" id="status-2-0"></span>
+              <span class="status-dot" id="status-2-1"></span>
+            </span>
+          </div>
+          <div class="status-item" data-act-id="1">
+            <span class="status-name">사일로(우)</span>
+            <span class="status-indicators">
+              <span class="status-dot" id="status-1-0"></span>
+              <span class="status-dot" id="status-1-1"></span>
+            </span>
+          </div>
+          <div class="status-item" data-act-id="3">
+            <span class="status-name">로터리</span>
+            <span class="status-indicators">
+              <span class="status-dot" id="status-3-0"></span>
+              <span class="status-dot" id="status-3-1"></span>
+            </span>
+          </div>
+          <div class="status-item" data-act-id="4">
+            <span class="status-name">블로워</span>
+            <span class="status-indicators">
+              <span class="status-dot" id="status-4-0"></span>
+              <span class="status-dot" id="status-4-1"></span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+          </div>
+
+        </div>
+
       </div>
 
       <div class="item" data-act-id="1">
-        <label class="item-title" for="silo-motor-right">사일로(우)</label>
-        <input type="number" id="silo-motor-right" class="timer-box" placeholder="초 단위 작성">
-
-        <div class="remote-buttons">
-          <button class="item-start">ON</button>
-          <button class="item-stop">OFF</button>
+        <div class="item-header">
+          <label class="item-title" for="silo-motor-right">사일로(우)</label>
         </div>
+        <div class="input-group">
+          <div class="input-field">
+            <label class="input-label">지연시간 (초)</label>
+            <input type="number" id="silo-motor-right" class="timer-box" placeholder="초" min="0" max="9999" value="10">
+          </div>
+          <div class="input-field">
+            <label class="input-label">지속시간</label>
+            <input type="number" id="silo-motor-right-time" class="time-box" placeholder="0" min="0" max="9999" value="0">
+          </div>
+        </div>
+
       </div>
 
       <div class="item" data-act-id="2">
-        <label class="item-title" for="silo-motor-left">사일로(좌)</label>
-        <input type="number" id="silo-motor-left" class="timer-box" placeholder="초 단위 작성">
-
-        <div class="remote-buttons">
-          <button class="item-start">ON</button>
-          <button class="item-stop">OFF</button>
+        <div class="item-header">
+          <label class="item-title" for="silo-motor-left">사일로(좌)</label>
         </div>
+        <div class="input-group">
+          <div class="input-field">
+            <label class="input-label">지연시간 (초)</label>
+            <input type="number" id="silo-motor-left" class="timer-box" placeholder="초" min="0" max="9999" value="10">
+          </div>
+          <div class="input-field">
+            <label class="input-label">지속시간</label>
+            <input type="number" id="silo-motor-left-time" class="time-box" placeholder="0" min="0" max="9999" value="0">
+          </div>
+        </div>
+
       </div>
 
       <div class="item" data-act-id="3">
-        <label class="item-title" for="rotary-valve">로터리</label>
-        <input type="number" id="rotary-valve" class="timer-box" placeholder="초 단위 작성">
-
-        <div class="remote-buttons">
-          <button class="item-start">ON</button>
-          <button class="item-stop">OFF</button>
+        <div class="item-header">
+          <label class="item-title" for="rotary-valve">로터리</label>
         </div>
+        <div class="input-group">
+          <div class="input-field">
+            <label class="input-label">지연시간 (초)</label>
+            <input type="number" id="rotary-valve" class="timer-box" placeholder="초" min="0" max="9999" value="10">
+          </div>
+          <div class="input-field">
+            <label class="input-label">지속시간</label>
+            <input type="number" id="rotary-valve-time" class="time-box" placeholder="0" min="0" max="9999" value="0">
+          </div>
+        </div>
+
       </div>
 
       <div class="item" data-act-id="4">
-        <label class="item-title" for="blower">블로워</label>
-        <input type="number" id="blower" class="timer-box" placeholder="초 단위 작성">
-
-        <div class="remote-buttons">
-          <button class="item-start">ON</button>
-          <button class="item-stop">OFF</button>
+        <div class="item-header">
+          <label class="item-title" for="blower">블로워</label>
         </div>
+        <div class="input-group">
+          <div class="input-field">
+            <label class="input-label">지연시간 (초)</label>
+            <input type="number" id="blower" class="timer-box" placeholder="초" min="0" max="9999" value="10">
+          </div>
+          <div class="input-field">
+            <label class="input-label">지속시간</label>
+            <input type="number" id="blower-time" class="time-box" placeholder="0" min="0" max="9999" value="0">
+          </div>
+        </div>
+
       </div>
 
       <!-- <div class="item" data-act-id="5">
@@ -102,7 +183,7 @@
     <div class="submit-buttons">
       <button id="savePreset">저장</button>
       <button id="sendbutton">시작</button>
-      <button id="stopbutton">정지</button>
+      <button id="stopbutton">긴급 정지</button>
     </div>
 
   </div>
