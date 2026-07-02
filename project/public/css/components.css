@@ -1,0 +1,2710 @@
+/* ===================================
+   Reusable UI Components
+   Buttons, Inputs, Forms, Tables, etc.
+   =================================== */
+
+/* ===================================
+   Control Groups & Forms
+   =================================== */
+.control-group {
+    margin-bottom: var(--spacing-lg);
+}
+
+.control-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-sm);
+    letter-spacing: -0.2px;
+}
+
+.control-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+/* ===================================
+   Input Fields
+   =================================== */
+.input-field {
+    width: 100%;
+    padding: 11px var(--spacing-lg);
+    background-color: var(--bg-primary);
+    border: 2px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    color: var(--text-primary);
+    font-size: var(--font-size-base);
+    font-family: inherit;
+    transition: all var(--transition-base);
+    box-shadow: var(--shadow-xs);
+}
+
+.input-field:hover {
+    border-color: var(--border-medium);
+    box-shadow: var(--shadow-sm);
+}
+
+.input-field:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: var(--shadow-focus);
+    background-color: var(--bg-primary);
+}
+
+.input-field:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: var(--bg-tertiary);
+}
+
+.input-field::placeholder {
+    color: var(--text-muted);
+    font-weight: var(--font-weight-normal);
+}
+
+.input-small {
+    width: auto;
+    min-width: 90px;
+    padding: 9px var(--spacing-md);
+}
+
+.input-hint {
+    display: block;
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+    margin-top: var(--spacing-sm);
+    font-weight: var(--font-weight-normal);
+}
+
+/* Two-column input layout for large feeder controls */
+.input-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-sm);
+}
+
+/* Mobile: Stack input rows vertically */
+@media (max-width: 767px) {
+    .input-row {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-sm);
+    }
+}
+
+.input-col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.input-sublabel {
+    display: block;
+    font-size: var(--font-size-xs);
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 2px;
+    letter-spacing: -0.1px;
+}
+
+/* ===================================
+   Device Status Display (Large Feeder)
+   =================================== */
+.device-status-section {
+    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-xl);
+    border-bottom: 1px solid var(--border-light);
+}
+
+.device-status-title {
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-md);
+    text-align: center;
+    letter-spacing: -0.2px;
+}
+
+.device-status-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.device-status-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md) var(--spacing-lg);
+    transition: all var(--transition-base);
+}
+
+.device-status-item:hover {
+    background-color: rgba(0, 0, 0, 0.3);
+    box-shadow: var(--shadow-sm);
+}
+
+.device-status-name {
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--text-secondary);
+    letter-spacing: -0.1px;
+}
+
+.device-status-indicators {
+    display: inline-flex;
+    gap: var(--spacing-sm);
+    align-items: center;
+}
+
+.device-status-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-medium);
+    background-color: var(--bg-primary);
+    box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.3);
+    transition: all var(--transition-base);
+    cursor: help;
+}
+
+.device-status-dot.active {
+    background-color: var(--accent-success);
+    border-color: var(--accent-success);
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2),
+        0 0 8px rgba(34, 197, 94, 0.4);
+    animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Selector dot - larger and more prominent */
+.device-status-dot.selector-dot {
+    width: 22px;
+    height: 22px;
+    border-width: 2px;
+}
+
+.device-status-dot.selector-dot.active {
+    box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.25),
+        0 0 12px rgba(34, 197, 94, 0.5);
+}
+
+@keyframes pulse-glow {
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.8;
+        transform: scale(1.05);
+    }
+}
+
+/* ===================================
+   Tank Status Indicator
+   =================================== */
+.tank-status-indicator {
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(99, 102, 241, 0.05));
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-sm);
+}
+
+.tank-status-left {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.tank-status-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.tank-status-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    height: 32px;
+    padding: 0 var(--spacing-sm);
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    border-radius: var(--radius-sm);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all var(--transition-base);
+}
+
+.tank-status-badge:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.tank-status-number {
+    font-size: 1rem;
+    font-weight: 700;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* ===================================
+   Tank Selection Notification
+   =================================== */
+.tank-selection-notification {
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(99, 102, 241, 0.1));
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.tank-selection-notification.active {
+    opacity: 1;
+    transform: translateY(0);
+    animation: gentle-ding 0.6s ease;
+}
+
+.notification-icon {
+    font-size: 1.2rem;
+    animation: rotate-icon 0.6s ease;
+}
+
+.notification-text {
+    font-size: var(--font-size-sm);
+    color: var(--text-primary);
+    font-weight: var(--font-weight-medium);
+}
+
+.tank-number {
+    display: inline-block;
+    min-width: 1.5rem;
+    padding: 0.125rem 0.5rem;
+    background: rgba(59, 130, 246, 0.2);
+    border-radius: var(--radius-sm);
+    font-weight: var(--font-weight-bold);
+    color: var(--accent-primary);
+    text-align: center;
+}
+
+@keyframes gentle-ding {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px) scale(0.95);
+    }
+
+    50% {
+        transform: translateY(0) scale(1.02);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes rotate-icon {
+    0% {
+        transform: rotate(0deg) scale(1);
+    }
+
+    50% {
+        transform: rotate(10deg) scale(1.1);
+    }
+
+    100% {
+        transform: rotate(0deg) scale(1);
+    }
+}
+
+/* ===================================
+   Buttons - Premium Design
+   =================================== */
+.btn {
+    padding: 11px var(--spacing-xl);
+    border: none;
+    border-radius: var(--radius-lg);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    font-family: inherit;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    letter-spacing: var(--letter-spacing-tight);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left var(--transition-slow);
+}
+
+.btn:hover::before {
+    left: 100%;
+}
+
+.btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.btn:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: var(--shadow-md);
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Button Variants */
+.btn-primary {
+    background: var(--gradient-primary);
+    color: var(--text-inverse);
+    box-shadow: var(--shadow-md);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.btn-primary:hover:not(:disabled) {
+    box-shadow: var(--shadow-lg);
+    border-color: var(--accent-primary-hover);
+}
+
+.btn-primary:focus {
+    box-shadow: var(--shadow-focus);
+}
+
+.btn-secondary {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    border: 1.5px solid var(--border-medium);
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background-color: var(--bg-hover);
+    border-color: var(--border-dark);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-danger {
+    background: var(--gradient-primary);
+    background: linear-gradient(135deg, var(--accent-danger) 0%, var(--accent-danger-hover) 100%);
+    color: var(--text-inverse);
+    box-shadow: var(--shadow-md);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.btn-danger:hover:not(:disabled) {
+    box-shadow: var(--shadow-lg);
+    border-color: var(--accent-danger-hover);
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, var(--accent-warning) 0%, var(--accent-warning-hover) 100%);
+    color: var(--text-inverse);
+    box-shadow: var(--shadow-md);
+    border: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+.btn-warning:hover:not(:disabled) {
+    box-shadow: var(--shadow-lg);
+    border-color: var(--accent-warning-hover);
+}
+
+/* Button Sizes */
+.btn-block {
+    width: 100%;
+}
+
+.btn-large {
+    padding: var(--spacing-md) var(--spacing-xl);
+    font-size: 16px;
+}
+
+.btn-icon {
+    font-size: 18px;
+}
+
+.btn-icon-only {
+    min-width: 40px;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    line-height: 1;
+    border-radius: 50%;
+}
+
+.btn-icon-only:hover {
+    transform: rotate(180deg);
+    transition: transform 0.3s ease;
+}
+
+/* ===================================
+   Button Groups
+   =================================== */
+.button-group {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+}
+
+.button-group .btn {
+    flex: 1;
+}
+
+/* ===================================
+   Radio Buttons - Premium Design
+   =================================== */
+.radio-group {
+    display: flex;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.radio-label {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: 11px var(--spacing-xl);
+    background-color: var(--bg-primary);
+    border: 2px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    font-size: var(--font-size-base);
+    color: var(--text-secondary);
+    font-weight: var(--font-weight-medium);
+    box-shadow: var(--shadow-xs);
+}
+
+.radio-label:hover {
+    background-color: var(--bg-hover);
+    border-color: var(--accent-primary);
+    box-shadow: var(--shadow-sm);
+    transform: translateY(-1px);
+}
+
+.radio-label input[type="radio"] {
+    margin: 0;
+    cursor: pointer;
+    accent-color: var(--accent-primary);
+    width: 18px;
+    height: 18px;
+}
+
+.radio-label input[type="radio"]:checked+span {
+    color: var(--text-primary);
+    font-weight: var(--font-weight-semibold);
+}
+
+.radio-label:has(input[type="radio"]:checked) {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(59, 130, 246, 0.04) 100%);
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+    box-shadow: var(--shadow-focus);
+}
+
+/* ===================================
+   Checkbox Group - Tank Selection
+   =================================== */
+.checkbox-group {
+    display: flex;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.checkbox-label {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: 11px var(--spacing-xl);
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    user-select: none;
+    color: var(--text-secondary);
+    font-weight: var(--font-weight-medium);
+    box-shadow: var(--shadow-xs);
+}
+
+.checkbox-label:hover {
+    background-color: var(--bg-hover);
+    border-color: var(--accent-primary);
+    box-shadow: var(--shadow-sm);
+    transform: translateY(-1px);
+}
+
+.checkbox-label input[type="checkbox"] {
+    margin: 0;
+    cursor: pointer;
+    accent-color: var(--accent-primary);
+    width: 18px;
+    height: 18px;
+}
+
+.checkbox-label input[type="checkbox"]:checked+span {
+    color: var(--text-primary);
+    font-weight: var(--font-weight-semibold);
+}
+
+.checkbox-label:has(input[type="checkbox"]:checked) {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(59, 130, 246, 0.04) 100%);
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+    box-shadow: var(--shadow-focus);
+}
+
+/* ===================================
+   Toggle Switch - Premium iOS Style
+   =================================== */
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 54px;
+    height: 30px;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--border-medium);
+    border: 2px solid var(--border-light);
+    border-radius: 30px;
+    transition: all var(--transition-base);
+    box-shadow: var(--shadow-inner);
+}
+
+.toggle-slider:hover {
+    border-color: var(--border-dark);
+}
+
+.toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 22px;
+    width: 22px;
+    left: 2px;
+    bottom: 2px;
+    background-color: var(--bg-primary);
+    border-radius: 50%;
+    transition: all var(--transition-base);
+    box-shadow: var(--shadow-md);
+}
+
+.toggle-switch input:checked+.toggle-slider {
+    background: var(--gradient-success);
+    border-color: var(--accent-success);
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.toggle-switch input:checked+.toggle-slider:before {
+    transform: translateX(24px);
+    background-color: var(--bg-primary);
+    box-shadow: var(--shadow-lg);
+}
+
+/* ===================================
+   Time Picker
+   =================================== */
+.time-picker {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+    /* Allow wrapping on small screens */
+}
+
+.time-picker select {
+    min-width: 80px;
+    /* Ensure selects have minimum width */
+    max-width: 100%;
+    /* Prevent overflow */
+}
+
+.time-separator {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-primary);
+    user-select: none;
+    /* Prevent text selection */
+}
+
+/* Time Picker with Duration (Horizontal Layout) */
+.time-picker-with-duration {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+    flex-wrap: wrap;
+    width: 100%;
+    /* Ensure full width for proper wrapping */
+}
+
+.duration-input-inline {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+    /* Allow wrapping on small screens */
+    min-width: 0;
+    /* Allow shrinking */
+}
+
+.duration-input-inline .input-field {
+    min-width: 80px;
+    /* Ensure input has minimum width */
+}
+
+.control-label-inline {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    font-weight: var(--font-weight-medium);
+    white-space: nowrap;
+}
+
+/* ===================================
+   Schedule List
+   =================================== */
+.schedule-list {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+    min-height: 80px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    align-items: flex-start;
+}
+
+.schedule-item {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: 6px var(--spacing-md);
+    background-color: var(--accent-primary);
+    border-radius: var(--radius-md);
+    color: var(--text-inverse);
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-base);
+}
+
+.schedule-item:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+}
+
+.schedule-item-time {
+    font-family: 'SF Mono', 'Consolas', 'Monaco', monospace;
+    letter-spacing: -0.3px;
+}
+
+.schedule-item-remove {
+    background: none;
+    border: none;
+    color: var(--text-inverse);
+    font-size: 16px;
+    cursor: pointer;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color var(--transition-base);
+}
+
+.schedule-item-remove:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* ===================================
+   Sensor Configuration
+   =================================== */
+.sensor-config {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.sensor-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-lg);
+    background-color: var(--bg-secondary);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-light);
+}
+
+/* ===================================
+   Log Table
+   =================================== */
+.log-container {
+    background-color: var(--bg-primary);
+    border-radius: var(--radius-md);
+    max-height: 400px;
+    overflow-x: auto;
+    overflow-y: auto;
+    border: 1px solid var(--border-light);
+}
+
+.log-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    table-layout: auto;
+}
+
+.log-table thead {
+    background-color: var(--bg-secondary);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.log-table th {
+    padding: var(--spacing-md);
+    text-align: left;
+    font-weight: 600;
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--border-light);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.log-table td {
+    padding: var(--spacing-md);
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--border-light);
+    vertical-align: top;
+}
+
+.log-table tbody tr:hover {
+    background-color: var(--bg-hover);
+}
+
+/* Column width constraints for horizontal scrolling */
+.log-table th:nth-child(1),
+.log-table td:nth-child(1) {
+    width: 80px;
+    min-width: 80px;
+    white-space: nowrap;
+}
+
+.log-table th:nth-child(2),
+.log-table td:nth-child(2) {
+    width: 100px;
+    min-width: 100px;
+    white-space: nowrap;
+}
+
+.log-table th:nth-child(3),
+.log-table td:nth-child(3) {
+    width: 120px;
+    min-width: 120px;
+    white-space: nowrap;
+}
+
+.log-table th:nth-child(4),
+.log-table td:nth-child(4) {
+    min-width: 200px;
+    white-space: nowrap;
+}
+
+/* Status/Details column - single line with horizontal scroll */
+.log-table .log-details {
+    white-space: nowrap;
+    min-width: 200px;
+}
+
+/* Log status styling */
+.log-success {
+    color: var(--accent-success);
+    font-weight: 500;
+}
+
+.log-error {
+    color: var(--accent-danger);
+    font-weight: 500;
+}
+
+.log-info {
+    color: var(--text-primary);
+}
+
+/* ===================================
+   Status Grid (Right Panel)
+   =================================== */
+.status-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    /* Responsive grid - reduced min-width for better mobile support */
+    gap: var(--spacing-md);
+    width: 100%;
+    /* Ensure full width */
+}
+
+.status-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px 12px;
+    background-color: var(--bg-secondary);
+    border-radius: var(--radius-md);
+    text-align: center;
+    border: 1px solid var(--border-light);
+    transition: all var(--transition-base);
+    min-width: 0;
+    /* Allow shrinking */
+}
+
+.status-item:hover {
+    box-shadow: var(--shadow-sm);
+}
+
+.status-label {
+    font-size: 11px;
+    color: var(--text-secondary);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    text-align: center;
+    /* Ensure centered alignment */
+}
+
+.status-indicator {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-muted);
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
+    background-color: var(--bg-tertiary);
+    text-align: center;
+    /* Ensure centered alignment */
+    display: inline-block;
+    /* Proper inline-block for centering */
+    width: 100%;
+    /* Full width for proper centering */
+    box-sizing: border-box;
+    /* Include padding in width calculation */
+}
+
+.status-indicator.active {
+    color: var(--accent-success);
+    background-color: var(--accent-success-light);
+}
+
+.status-indicator.warning {
+    color: #F29900;
+    background-color: var(--accent-warning-light);
+}
+
+.status-indicator.error {
+    color: var(--accent-danger);
+    background-color: var(--accent-danger-light);
+}
+
+/* ===================================
+   Info Text
+   =================================== */
+.info-text {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: var(--spacing-sm);
+    font-style: italic;
+}
+
+/* ===================================
+   Scrollbar Styling
+   =================================== */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-medium);
+    border-radius: 6px;
+    border: 2px solid var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--border-dark);
+}
+
+/* ===================================
+   Next Execution Display
+   =================================== */
+.next-execution-display {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+}
+
+.next-execution-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-sm) 0;
+}
+
+.next-execution-item:not(:last-child) {
+    border-bottom: 1px solid var(--border-light);
+    margin-bottom: var(--spacing-sm);
+    padding-bottom: var(--spacing-md);
+}
+
+.next-execution-label {
+    font-size: 13px;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.next-execution-value {
+    font-size: 14px;
+    color: var(--text-primary);
+    font-weight: 600;
+    font-family: 'SF Mono', 'Consolas', 'Monaco', monospace;
+    letter-spacing: -0.3px;
+}
+
+.next-execution-value.countdown {
+    color: var(--accent-success);
+}
+
+.next-execution-value.overdue {
+    color: var(--accent-danger);
+}
+
+.next-execution-value.soon {
+    color: #F29900;
+}
+
+/* ===================================
+   Info Section with Independent Scrolling
+   =================================== */
+.info-section-scrollable {
+    max-height: 25vh;
+    /* Responsive to viewport height - approximately 25% of screen height */
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: var(--spacing-sm);
+}
+
+/* Horizontal Section Separator */
+.section-separator {
+    border: none;
+    border-top: 1px solid var(--border-light);
+    margin: var(--spacing-lg) 0;
+}
+
+/* ===================================
+   Schedule Cards
+   =================================== */
+.schedule-list-container {
+    margin-top: var(--spacing-md);
+}
+
+.schedule-cards {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.schedule-card {
+    background: var(--gradient-subtle);
+    border: 2px solid var(--border-light);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-xl);
+    transition: all var(--transition-base);
+    box-shadow: var(--shadow-md);
+    position: relative;
+    overflow: hidden;
+}
+
+.schedule-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--gradient-primary);
+    opacity: 0;
+    transition: opacity var(--transition-base);
+}
+
+.schedule-card:hover {
+    border-color: var(--accent-primary);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-3px);
+}
+
+.schedule-card:hover::before {
+    opacity: 1;
+}
+
+.schedule-card.disabled {
+    opacity: 0.6;
+    /* Slightly higher opacity for better readability */
+    background: linear-gradient(135deg, rgba(51, 65, 85, 0.3) 0%, rgba(30, 41, 59, 0.3) 100%);
+    /* Darker, muted background for inactive schedules */
+    border-color: var(--border-medium);
+    /* Subtle border for inactive state */
+}
+
+.schedule-card.disabled:hover {
+    opacity: 0.75;
+    /* Increase opacity on hover for better interaction feedback */
+    transform: translateY(-2px);
+    /* Reduced hover lift for inactive schedules */
+}
+
+.schedule-card.disabled .schedule-time-text {
+    color: var(--text-muted);
+    /* Muted text color for inactive schedule time */
+    text-decoration: line-through;
+    /* Strikethrough to indicate inactive status */
+    text-decoration-color: var(--text-muted);
+    text-decoration-thickness: 1px;
+}
+
+.schedule-card.disabled .schedule-days-badge {
+    background-color: rgba(100, 116, 139, 0.15);
+    /* Darker badge background */
+    border-color: var(--border-medium);
+    color: var(--text-muted);
+    /* Muted badge text */
+}
+
+.schedule-card.selected {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2), var(--shadow-lg);
+    background: linear-gradient(135deg, rgba(74, 144, 226, 0.08) 0%, rgba(74, 144, 226, 0.03) 100%);
+}
+
+.schedule-card.selected::before {
+    opacity: 1;
+}
+
+.schedule-card.selected .schedule-card-header-compact {
+    background-color: rgba(74, 144, 226, 0.05);
+}
+
+.schedule-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-lg);
+    border-bottom: 2px solid var(--border-light);
+}
+
+.schedule-card-title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+    letter-spacing: var(--letter-spacing-tight);
+}
+
+.schedule-card-badge {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    letter-spacing: var(--letter-spacing-wide);
+    box-shadow: var(--shadow-sm);
+}
+
+.schedule-card-badge.active {
+    background: var(--gradient-success);
+    color: var(--text-inverse);
+}
+
+.schedule-card-badge.inactive {
+    background-color: var(--bg-tertiary);
+    color: var(--text-muted);
+    border: 1px solid var(--border-medium);
+}
+
+.schedule-card-body {
+    margin-bottom: var(--spacing-md);
+}
+
+.schedule-card-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    font-size: 13px;
+}
+
+.schedule-card-label {
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.schedule-card-value {
+    color: var(--text-primary);
+    font-weight: 600;
+    font-family: 'SF Mono', 'Consolas', 'Monaco', monospace;
+    letter-spacing: -0.3px;
+}
+
+.schedule-card-times {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 6px;
+}
+
+.schedule-card-time-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    background-color: rgba(74, 144, 226, 0.08);
+    border: 1px solid rgba(74, 144, 226, 0.2);
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    font-family: 'SF Mono', 'Consolas', 'Monaco', monospace;
+    color: var(--accent-primary);
+    font-weight: 500;
+}
+
+.schedule-card-footer {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-md);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--border-light);
+}
+
+.schedule-card-btn {
+    flex: 1;
+    padding: 6px 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    font-weight: 500;
+    min-width: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.schedule-card-btn.btn-edit {
+    background-color: rgba(74, 144, 226, 0.08);
+    color: var(--accent-primary);
+    border: 1px solid rgba(74, 144, 226, 0.2);
+}
+
+.schedule-card-btn.btn-edit:hover {
+    background-color: rgba(74, 144, 226, 0.15);
+    border-color: var(--accent-primary);
+}
+
+.schedule-card-btn.btn-delete {
+    background-color: var(--accent-danger-light);
+    color: var(--accent-danger);
+    border: 1px solid rgba(234, 67, 53, 0.2);
+}
+
+.schedule-card-btn.btn-delete:hover {
+    background-color: rgba(234, 67, 53, 0.15);
+    border-color: var(--accent-danger);
+    transform: scale(1.05);
+}
+
+.schedule-card-btn.btn-toggle {
+    background-color: var(--accent-success-light);
+    color: var(--accent-success);
+    border: 1px solid rgba(52, 168, 83, 0.2);
+}
+
+.schedule-card-btn.btn-toggle:hover {
+    background-color: rgba(52, 168, 83, 0.15);
+    border-color: var(--accent-success);
+    transform: scale(1.05);
+}
+
+.schedule-card-btn.btn-toggle.disabled {
+    background-color: var(--bg-tertiary);
+    color: var(--text-muted);
+    border: 1px solid var(--border-medium);
+}
+
+.schedule-card-btn.btn-toggle.disabled:hover {
+    transform: scale(1.05);
+}
+
+/* ===================================
+   Compact Schedule Cards (Expandable)
+   =================================== */
+.schedule-card-compact {
+    padding: 0;
+    overflow: hidden;
+}
+
+.schedule-card-header-compact {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md) var(--spacing-lg);
+    transition: background-color var(--transition-base);
+    cursor: pointer;
+}
+
+.schedule-card-header-compact:hover {
+    background-color: rgba(74, 144, 226, 0.03);
+}
+
+.schedule-info-compact {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+    cursor: pointer;
+    flex: 1;
+}
+
+.schedule-info-compact:hover {
+    opacity: 0.8;
+}
+
+.schedule-time-text {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+    font-family: 'SF Mono', 'Consolas', 'Monaco', monospace;
+}
+
+.schedule-days-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    background-color: rgba(74, 144, 226, 0.08);
+    border: 1px solid rgba(74, 144, 226, 0.2);
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-xs);
+    color: var(--accent-primary);
+    font-weight: 500;
+}
+
+.schedule-actions-compact {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.schedule-status-badge {
+    font-size: 18px;
+}
+
+.schedule-status-badge.active {
+    color: var(--accent-success);
+}
+
+.schedule-status-badge.inactive {
+    color: var(--text-muted);
+}
+
+.expand-icon {
+    font-size: 12px;
+    color: var(--text-secondary);
+    transition: transform var(--transition-base);
+    cursor: pointer;
+    padding: 4px;
+}
+
+.schedule-card-compact.expanded .expand-icon {
+    transform: rotate(180deg);
+}
+
+/* Details section (hidden by default) */
+.schedule-card-details {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height var(--transition-base);
+    background-color: rgba(15, 23, 42, 0.3);
+}
+
+.schedule-card-compact.expanded .schedule-card-details {
+    max-height: 500px;
+}
+
+.feed-details-list {
+    padding: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.feed-detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-sm) var(--spacing-md);
+    background-color: var(--bg-primary);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-light);
+}
+
+.feed-detail-tank {
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+    min-width: 80px;
+}
+
+.feed-detail-motors {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    flex: 1;
+    text-align: center;
+}
+
+.feed-detail-duration {
+    font-size: var(--font-size-sm);
+    color: var(--accent-primary);
+    font-weight: var(--font-weight-medium);
+    font-family: 'SF Mono', 'Consolas', 'Monaco', monospace;
+}
+
+/* ===================================
+   Operation Log Styles
+   =================================== */
+.log-success {
+    color: var(--accent-success);
+    font-weight: 600;
+}
+
+.log-error {
+    color: var(--accent-danger);
+    font-weight: 600;
+}
+
+.log-info {
+    color: var(--accent-primary);
+    font-weight: 600;
+}
+
+.log-details {
+    font-size: 12px;
+    color: var(--text-secondary);
+    font-family: 'Consolas', 'Monaco', monospace;
+}
+
+/* ===================================
+   RESPONSIVE COMPONENT STYLES
+   Mobile-First Responsive Design
+   =================================== */
+
+/* ===================================
+   Mobile Devices (<768px)
+   =================================== */
+@media (max-width: 767px) {
+
+    /* Buttons - Touch-Friendly */
+    .btn {
+        min-height: var(--touch-target-comfortable);
+        /* Improved: Increased from 44px to 48px for more comfortable touch targets */
+        padding: var(--spacing-md) var(--spacing-lg);
+        font-size: var(--font-size-base);
+        width: 100%;
+    }
+
+    .btn-block {
+        width: 100%;
+    }
+
+    .btn-small {
+        min-height: 40px;
+        padding: var(--spacing-sm) var(--spacing-md);
+        font-size: var(--font-size-sm);
+    }
+
+    /* Input Fields - Mobile Optimized */
+    .input-field {
+        min-height: var(--touch-target-comfortable);
+        /* Improved: Increased from 44px to 48px for more comfortable touch targets */
+        padding: var(--spacing-md) var(--spacing-lg);
+        font-size: 16px;
+        /* Prevent iOS zoom */
+    }
+
+    .input-small {
+        min-width: 100%;
+        width: 100%;
+    }
+
+    /* Control Groups */
+    .control-row {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+
+    .control-label {
+        font-size: var(--font-size-sm);
+        margin-bottom: var(--spacing-sm);
+    }
+
+    /* Radio Groups - Mobile Layout */
+    .radio-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--spacing-sm);
+    }
+
+    .radio-label {
+        flex: 1 1 calc(50% - var(--spacing-sm));
+        min-width: calc(50% - var(--spacing-sm));
+        min-height: var(--touch-target-comfortable);
+        /* Improved: Increased from 44px to 48px for more comfortable touch targets */
+        padding: var(--spacing-md);
+        font-size: var(--font-size-sm);
+    }
+
+    /* Toggle Switches - Larger on Mobile */
+    .toggle-switch {
+        width: 56px;
+        height: 32px;
+    }
+
+    .toggle-slider:before {
+        width: 26px;
+        height: 26px;
+    }
+
+    input:checked+.toggle-slider:before {
+        transform: translateX(24px);
+    }
+
+    /* Time Selection Grid */
+    .time-selection-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-sm);
+    }
+
+    .time-selector {
+        padding: var(--spacing-sm);
+    }
+
+    .time-selector select {
+        font-size: var(--font-size-sm);
+        padding: var(--spacing-sm);
+    }
+
+    /* Time Badges */
+    .time-badge {
+        padding: var(--spacing-sm) var(--spacing-md);
+        font-size: var(--font-size-sm);
+        min-height: 36px;
+    }
+
+    /* Device Status Section - Mobile Optimized */
+    .device-status-section {
+        padding: var(--spacing-md);
+    }
+
+    .device-status-title {
+        font-size: var(--font-size-lg);
+        /* Improved: Increased from base (14-16px) to lg (15-18px) for better hierarchy */
+        font-weight: var(--font-weight-semibold);
+        /* Improved: Added semibold weight (600) for more prominence */
+        margin-bottom: var(--spacing-md);
+    }
+
+    .device-status-list {
+        gap: 12px;
+        /* Improved: Increased from sm (8px) to 12px for better visual separation */
+    }
+
+    .device-status-item {
+        padding: 12px var(--spacing-md);
+        /* Improved: Increased vertical padding from sm (8px) to 12px for more comfort */
+        flex-wrap: wrap;
+    }
+
+    .device-status-name {
+        font-size: var(--font-size-sm);
+        flex: 1 1 auto;
+    }
+
+    .device-status-indicators {
+        gap: var(--spacing-xs);
+    }
+
+    /* Device Status Dots - Optimized for Mobile Visibility */
+    .device-status-dot {
+        width: 16px;
+        height: 16px;
+        /* Improved: Increased from 14px to 16px for better visibility */
+    }
+
+    .device-status-dot.selector-dot {
+        width: 20px;
+        height: 20px;
+        /* Improved: Increased from 18px to 20px for better visibility */
+    }
+
+    /* Tank Status Indicator - Mobile Layout */
+    .tank-status-indicator {
+        padding: var(--spacing-sm);
+        gap: var(--spacing-xs);
+        flex-wrap: wrap;
+    }
+
+    .tank-status-left {
+        gap: var(--spacing-xs);
+        flex: 1 1 auto;
+    }
+
+    .tank-status-label {
+        font-size: var(--font-size-sm);
+    }
+
+    .tank-status-badge {
+        min-width: 28px;
+        height: 28px;
+        padding: 0 var(--spacing-xs);
+    }
+
+    .tank-status-number {
+        font-size: 0.875rem;
+    }
+
+    /* Tank Selection Notification - Mobile */
+    .tank-selection-notification {
+        padding: var(--spacing-sm) var(--spacing-md);
+        margin-top: var(--spacing-md);
+        gap: var(--spacing-xs);
+    }
+
+    .notification-icon {
+        font-size: 1rem;
+    }
+
+    .notification-text {
+        font-size: var(--font-size-xs);
+    }
+
+    .tank-number {
+        min-width: 1.25rem;
+        padding: 0.1rem 0.4rem;
+        font-size: var(--font-size-xs);
+    }
+
+    /* Schedule Cards - Full Width */
+    .schedule-card {
+        margin-bottom: var(--spacing-md);
+    }
+
+    .schedule-card-header {
+        padding: var(--spacing-md);
+    }
+
+    .schedule-card-title {
+        font-size: var(--font-size-base);
+    }
+
+    .schedule-card-body {
+        padding: var(--spacing-md);
+    }
+
+    .schedule-card-row {
+        margin-bottom: var(--spacing-sm);
+    }
+
+    .schedule-card-label {
+        font-size: var(--font-size-sm);
+    }
+
+    .schedule-card-value {
+        font-size: var(--font-size-sm);
+    }
+
+    .schedule-card-times {
+        gap: var(--spacing-xs);
+    }
+
+    .schedule-card-time-badge {
+        padding: var(--spacing-xs) var(--spacing-sm);
+        font-size: var(--font-size-xs);
+    }
+
+    .schedule-card-actions {
+        padding: var(--spacing-md);
+        gap: var(--spacing-sm);
+        flex-direction: column;
+    }
+
+    .schedule-card-actions .btn {
+        width: 100%;
+    }
+
+    /* Tables - Responsive */
+    .data-table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .data-table {
+        font-size: var(--font-size-sm);
+    }
+
+    .data-table th,
+    .data-table td {
+        padding: var(--spacing-sm);
+        white-space: nowrap;
+    }
+
+    /* Next Execution Display */
+    .next-execution-display {
+        padding: var(--spacing-md);
+    }
+
+    .next-execution-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-xs);
+    }
+
+    .next-execution-label {
+        font-size: var(--font-size-sm);
+    }
+
+    .next-execution-value {
+        font-size: var(--font-size-base);
+    }
+
+    /* Preset Buttons */
+    .preset-buttons {
+        gap: var(--spacing-sm);
+    }
+
+    .preset-btn {
+        flex: 1 1 calc(33.333% - var(--spacing-sm));
+        min-width: calc(33.333% - var(--spacing-sm));
+        padding: var(--spacing-sm);
+        font-size: var(--font-size-sm);
+        min-height: var(--touch-target-comfortable);
+        /* Improved: Increased from 44px to 48px for more comfortable touch targets */
+    }
+
+    /* Time Picker with Duration - Mobile Layout */
+    .time-picker-with-duration {
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--spacing-md);
+    }
+
+    .time-picker {
+        flex-wrap: wrap;
+        gap: var(--spacing-sm);
+        justify-content: stretch;
+    }
+
+    .time-picker select {
+        flex: 1 1 calc(50% - 30px);
+        min-width: calc(50% - 30px);
+        font-size: 16px;
+        /* Prevent iOS zoom */
+    }
+
+    .time-picker .btn {
+        flex: 1 1 100%;
+        width: 100%;
+        margin-top: var(--spacing-sm);
+    }
+
+    .time-separator {
+        font-size: 18px;
+        flex: 0 0 auto;
+    }
+
+    .duration-input-inline {
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--spacing-sm);
+    }
+
+    .duration-input-inline .control-label-inline {
+        font-size: var(--font-size-sm);
+        white-space: normal;
+    }
+
+    .duration-input-inline .input-field {
+        width: 100%;
+    }
+
+    /* Status Grid - Mobile Layout */
+    .status-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-sm);
+    }
+
+    .status-item {
+        padding: var(--spacing-md);
+        align-items: center;
+        /* Center all children horizontally */
+        min-height: 60px;
+        /* Ensure adequate touch target and readability */
+    }
+
+    .status-label {
+        font-size: 13px;
+        /* Slightly larger for better mobile readability */
+        text-align: center;
+        /* Ensure centered on mobile */
+        width: 100%;
+        /* Full width for centering */
+        margin-bottom: 4px;
+        /* Add spacing between label and indicator */
+    }
+
+    .status-indicator {
+        font-size: 15px;
+        /* Larger text for better mobile readability */
+        font-weight: 600;
+        padding: 6px 12px;
+        /* Increased padding for better touch targets */
+        text-align: center;
+        /* Ensure centered on mobile */
+        width: 100%;
+        /* Full width for centering */
+        display: block;
+        /* Block display for full width */
+        min-height: 32px;
+        /* Ensure adequate height */
+        line-height: 1.4;
+        /* Better line height for readability */
+    }
+}
+
+/* ===================================
+   Small Mobile Devices (<480px)
+   =================================== */
+@media (max-width: 479px) {
+
+    /* Radio Groups - Stack Vertically */
+    .radio-label {
+        flex: 1 1 100%;
+        min-width: 100%;
+    }
+
+    /* Time Selection - Single Column */
+    .time-selection-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Preset Buttons - Stack Vertically */
+    .preset-buttons {
+        flex-direction: column;
+    }
+
+    .preset-btn {
+        flex: 1 1 100%;
+        min-width: 100%;
+    }
+
+    /* Schedule Card Actions - Full Width */
+    .schedule-card-actions {
+        flex-direction: column;
+    }
+
+    .schedule-card-actions .btn {
+        width: 100%;
+    }
+
+    /* Reduce Font Sizes */
+    .schedule-card-title {
+        font-size: var(--font-size-sm);
+    }
+
+    .schedule-card-label,
+    .schedule-card-value {
+        font-size: var(--font-size-xs);
+    }
+
+    /* Device Status - Extra Compact */
+    .device-status-item {
+        padding: var(--spacing-xs) var(--spacing-sm);
+    }
+
+    .device-status-name {
+        font-size: var(--font-size-xs);
+    }
+
+    .device-status-dot {
+        width: 12px;
+        height: 12px;
+    }
+
+    .device-status-dot.selector-dot {
+        width: 16px;
+        height: 16px;
+    }
+
+    /* Tank Status Indicator - Extra Compact */
+    .tank-status-indicator {
+        padding: var(--spacing-xs) var(--spacing-sm);
+    }
+
+    .tank-status-label {
+        font-size: var(--font-size-xs);
+    }
+
+    .tank-status-badge {
+        min-width: 24px;
+        height: 24px;
+    }
+
+    .tank-status-number {
+        font-size: 0.75rem;
+    }
+
+    /* Tank Selection Notification - Extra Compact */
+    .tank-selection-notification {
+        padding: var(--spacing-xs) var(--spacing-sm);
+    }
+
+    /* Time Picker - Extra Small Screens */
+    .time-picker select {
+        flex: 1 1 100%;
+        min-width: 100%;
+        margin-bottom: var(--spacing-xs);
+    }
+
+    .time-separator {
+        display: none;
+        /* Hide separator on very small screens */
+    }
+
+    .time-picker {
+        flex-direction: column;
+    }
+
+    /* Status Grid - Single Column */
+    .status-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-xs);
+        /* Tighter spacing on very small screens */
+    }
+
+    .status-item {
+        padding: 10px 12px;
+        /* Optimized padding for extra small screens */
+        min-height: 56px;
+        /* Maintain adequate touch target */
+    }
+
+    .status-label {
+        font-size: 12px;
+        /* Slightly smaller on very small screens */
+    }
+
+    .status-indicator {
+        font-size: 14px;
+        /* Adjusted for very small screens */
+        padding: 5px 10px;
+    }
+}
+
+/* ===================================
+   Tablet Devices (768px - 1024px)
+   =================================== */
+@media (min-width: 768px) and (max-width: 1023px) {
+
+    /* Buttons - Comfortable Touch Targets */
+    .btn {
+        min-height: var(--touch-target-comfortable);
+        padding: var(--spacing-md) var(--spacing-xl);
+    }
+
+    /* Radio Groups - Tablet Layout */
+    .radio-label {
+        flex: 1 1 calc(33.333% - var(--spacing-sm));
+        min-width: calc(33.333% - var(--spacing-sm));
+    }
+
+    /* Time Selection - Three Columns */
+    .time-selection-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    /* Schedule Cards - Two Column Actions */
+    .schedule-card-actions {
+        flex-direction: row;
+        gap: var(--spacing-sm);
+    }
+
+    .schedule-card-actions .btn {
+        flex: 1;
+    }
+
+    /* Time Picker - Tablet Layout */
+    .time-picker-with-duration {
+        flex-direction: row;
+        align-items: center;
+        gap: var(--spacing-lg);
+    }
+
+    .time-picker {
+        flex: 1;
+    }
+
+    .duration-input-inline {
+        flex-direction: row;
+        align-items: center;
+        gap: var(--spacing-md);
+    }
+
+    /* Device Status - Tablet Optimized */
+    .device-status-dot {
+        width: 15px;
+        height: 15px;
+    }
+
+    .device-status-dot.selector-dot {
+        width: 20px;
+        height: 20px;
+    }
+
+    /* Tank Status Indicator - Tablet */
+    .tank-status-indicator {
+        padding: var(--spacing-sm) var(--spacing-md);
+    }
+
+    .tank-status-badge {
+        min-width: 30px;
+        height: 30px;
+    }
+
+    /* Status Grid - Two Columns on Tablet */
+    .status-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-md);
+    }
+}
+
+/* ===================================
+   Touch Device Optimizations
+   =================================== */
+@media (hover: none) and (pointer: coarse) {
+
+    /* All Interactive Elements - Touch Friendly */
+    .btn,
+    .input-field,
+    .radio-label,
+    .toggle-switch,
+    .preset-btn,
+    .time-badge {
+        min-height: var(--touch-target-min);
+    }
+
+    /* Input Fields - Prevent iOS Zoom */
+    .input-field,
+    select.input-field,
+    textarea.input-field {
+        font-size: 16px;
+    }
+
+    /* Remove Hover Effects */
+    .btn:hover,
+    .radio-label:hover,
+    .schedule-card:hover,
+    .time-badge:hover {
+        transform: none;
+    }
+
+    /* Active States for Touch Feedback */
+    .btn:active {
+        transform: scale(0.98);
+        opacity: 0.9;
+    }
+
+    .radio-label:active {
+        transform: scale(0.98);
+    }
+
+    .time-badge:active {
+        transform: scale(0.95);
+    }
+
+    .preset-btn:active {
+        transform: scale(0.97);
+    }
+
+    /* Larger Touch Targets for Small Elements */
+    .schedule-card-time-badge {
+        min-height: 32px;
+        padding: var(--spacing-sm) var(--spacing-md);
+    }
+
+    /* Device Status Dots - Touch Friendly */
+    .device-status-dot {
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+    }
+
+    .device-status-dot.selector-dot {
+        width: 24px;
+        height: 24px;
+    }
+
+    /* Tank Status Badge - Touch Friendly */
+    .tank-status-badge {
+        min-width: 36px;
+        height: 36px;
+        cursor: pointer;
+    }
+
+    /* Remove Hover Effects on Touch Devices */
+    .tank-status-badge:hover,
+    .device-status-item:hover {
+        transform: none;
+    }
+
+    /* Active States for Touch Feedback */
+    .tank-status-badge:active {
+        transform: scale(0.95);
+    }
+
+    .device-status-item:active {
+        background-color: rgba(0, 0, 0, 0.35);
+    }
+}
+
+/* ===================================
+   Landscape Orientation (Mobile)
+   =================================== */
+@media (max-width: 767px) and (orientation: landscape) {
+
+    /* Optimize for Mobile Landscape */
+    .radio-group {
+        flex-direction: row;
+    }
+
+    .radio-label {
+        flex: 1 1 calc(25% - var(--spacing-sm));
+        min-width: calc(25% - var(--spacing-sm));
+    }
+
+    .time-selection-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .preset-buttons {
+        flex-direction: row;
+    }
+
+    .preset-btn {
+        flex: 1 1 calc(33.333% - var(--spacing-sm));
+        min-width: calc(33.333% - var(--spacing-sm));
+    }
+}
+
+/* ===================================
+   High DPI Displays (Retina)
+   =================================== */
+@media (-webkit-min-device-pixel-ratio: 2),
+(min-resolution: 192dpi) {
+
+    /* Sharper borders and shadows on high DPI */
+    .btn,
+    .input-field,
+    .schedule-card,
+    .radio-label {
+        border-width: 1px;
+    }
+
+    /* Optimize shadows for retina */
+    .schedule-card {
+        box-shadow: var(--shadow-md);
+    }
+}
+
+/* ===================================
+   Day of Week Selection (Checkboxes)
+   =================================== */
+
+/* Quick Select Buttons */
+.quick-select-buttons {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.btn-small {
+    padding: var(--spacing-xs) var(--spacing-md);
+    font-size: var(--font-size-sm);
+    min-height: 36px;
+}
+
+/* Day Checkboxes Container */
+.day-checkboxes {
+    display: flex;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+}
+
+/* Day Checkbox Label */
+.day-checkbox-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    padding: var(--spacing-sm) var(--spacing-md);
+    background-color: var(--bg-secondary);
+    border: 2px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    color: var(--text-secondary);
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    transition: all var(--transition-base);
+    box-shadow: var(--shadow-xs);
+    user-select: none;
+    position: relative;
+}
+
+.day-checkbox-label:hover {
+    background-color: var(--bg-tertiary);
+    border-color: var(--border-medium);
+    color: var(--text-primary);
+    box-shadow: var(--shadow-sm);
+    transform: translateY(-1px);
+}
+
+.day-checkbox-label:active {
+    transform: translateY(0);
+    box-shadow: var(--shadow-xs);
+}
+
+/* Hide actual checkbox */
+.day-checkbox {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* Checked state */
+.day-checkbox:checked+span {
+    color: #ffffff;
+}
+
+.day-checkbox:checked~span,
+.day-checkbox-label:has(.day-checkbox:checked) {
+    background: linear-gradient(135deg, var(--accent-primary) 0%, #3b82f6 100%);
+    border-color: var(--accent-primary);
+    color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2),
+        var(--shadow-md);
+}
+
+.day-checkbox-label:has(.day-checkbox:checked):hover {
+    background: linear-gradient(135deg, #3b82f6 0%, var(--accent-primary) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.3),
+        var(--shadow-lg);
+}
+
+/* Responsive day checkboxes */
+@media (max-width: 768px) {
+    .day-checkboxes {
+        gap: var(--spacing-xs);
+    }
+
+    .day-checkbox-label {
+        min-width: 40px;
+        min-height: 40px;
+        padding: var(--spacing-xs) var(--spacing-sm);
+        font-size: var(--font-size-sm);
+    }
+
+    .quick-select-buttons {
+        gap: var(--spacing-xs);
+    }
+
+    .btn-small {
+        padding: var(--spacing-xs) var(--spacing-sm);
+        font-size: 12px;
+        min-height: 32px;
+    }
+}
+
+/* ===================================
+   Preset Controls (Large Feeder)
+   =================================== */
+.preset-box {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.03) 0%, rgba(59, 130, 246, 0.01) 100%);
+    border: 2px solid var(--border-light);
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.preset-load {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.preset-btn {
+    padding: 12px 16px;
+    background: linear-gradient(135deg, var(--accent-primary) 0%, #2563eb 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    text-align: center;
+    white-space: nowrap;
+}
+
+.preset-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
+    background: linear-gradient(135deg, #2563eb 0%, var(--accent-primary) 100%);
+}
+
+.preset-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+}
+
+.preset-save {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border-light);
+}
+
+.preset-save-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    margin-right: 4px;
+}
+
+.radio-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 14px;
+    background-color: var(--bg-primary);
+    border: 2px solid var(--border-light);
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 40px;
+}
+
+.radio-pill:hover {
+    background-color: var(--bg-hover);
+    border-color: var(--accent-primary);
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.1);
+}
+
+.radio-pill input[type="radio"] {
+    display: none;
+}
+
+.radio-pill span {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    transition: color 0.2s ease;
+}
+
+.radio-pill:has(input[type="radio"]:checked) {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(59, 130, 246, 0.08) 100%);
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.radio-pill:has(input[type="radio"]:checked) span {
+    color: var(--accent-primary);
+    font-weight: 700;
+}
+
+.submit-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+    flex-wrap: wrap;
+    /* Allow wrapping on very narrow screens as fallback */
+}
+
+.submit-buttons .btn {
+    flex: 1;
+    white-space: nowrap;
+    /* Prevent text wrapping within buttons for clean appearance */
+    min-width: 0;
+    /* Allow flex items to shrink below content size if needed */
+}
+
+/* ===================================
+   ADDITIONAL MOBILE RESPONSIVE FIXES
+   Comprehensive mobile layout improvements
+   =================================== */
+
+/* Mobile Devices (<768px) - Additional Fixes */
+@media (max-width: 767px) {
+
+    /* Global Mobile Overflow Prevention */
+    * {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Prevent Horizontal Scroll */
+    body,
+    html {
+        overflow-x: hidden;
+        max-width: 100vw;
+    }
+
+    /* Preset Controls - Mobile Optimized */
+    .preset-box {
+        padding: var(--spacing-md);
+        gap: var(--spacing-sm);
+        margin-bottom: var(--spacing-md);
+    }
+
+    .preset-load {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-sm);
+    }
+
+    .preset-btn {
+        width: 100%;
+        min-height: var(--touch-target-comfortable);
+        /* Improved: Increased from 44px to 48px for more comfortable touch targets */
+        padding: var(--spacing-md);
+        font-size: var(--font-size-base);
+        white-space: normal;
+        word-wrap: break-word;
+    }
+
+    .preset-save {
+        flex-wrap: wrap;
+        gap: var(--spacing-sm);
+        padding-top: var(--spacing-sm);
+    }
+
+    .preset-save-label {
+        width: 100%;
+        text-align: center;
+        margin-bottom: var(--spacing-xs);
+    }
+
+    .radio-pill {
+        flex: 1 1 calc(33.333% - var(--spacing-sm));
+        /* Improved: Changed from 25% (4 per row) to 33.333% (3 per row) for wider buttons */
+        min-width: 48px;
+        /* Improved: Increased from 44px to 48px */
+        min-height: var(--touch-target-comfortable);
+        /* Improved: Increased from 44px to 48px for more comfortable touch targets */
+        padding: var(--spacing-sm) var(--spacing-md);
+    }
+
+    /* Submit Buttons - Full Width on Mobile */
+    .submit-buttons {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+
+    .submit-buttons .btn {
+        width: 100%;
+        min-height: var(--touch-target-comfortable);
+        /* Improved: Increased from 44px to 48px for more comfortable touch targets */
+    }
+
+    /* Control Groups - Mobile Spacing */
+    .control-group {
+        margin-bottom: var(--spacing-md);
+    }
+
+    .control-label {
+        font-size: var(--font-size-sm);
+        margin-bottom: var(--spacing-sm);
+    }
+
+    /* Input Fields - Full Width on Mobile */
+    .input-field {
+        width: 100%;
+        min-height: var(--touch-target-min);
+        font-size: 16px;
+        /* Prevent iOS zoom */
+    }
+
+    .input-col {
+        width: 100%;
+    }
+
+    .input-sublabel {
+        font-size: var(--font-size-xs);
+    }
+
+    /* Checkbox Groups - Mobile Layout */
+    .checkbox-group {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-sm);
+    }
+
+    .checkbox-label {
+        width: 100%;
+        min-height: var(--touch-target-comfortable);
+        /* Improved: Increased from 44px to 48px for more comfortable touch targets */
+        padding: var(--spacing-md);
+        font-size: var(--font-size-sm);
+        justify-content: center;
+    }
+
+    /* Day Checkboxes - Mobile Grid */
+    .day-checkboxes {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 6px;
+        /* Improved: Increased from xs (4px) to 6px for better spacing and tap accuracy */
+    }
+
+    .day-checkbox-label {
+        min-width: auto;
+        min-height: var(--touch-target-comfortable);
+        /* Improved: Increased from 44px to 48px for more comfortable touch targets */
+        padding: 10px var(--spacing-sm);
+        /* Improved: Increased vertical padding from sm (8px) to 10px */
+        font-size: var(--font-size-sm);
+    }
+
+    /* Quick Select Buttons - Mobile */
+    .quick-select-buttons {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--spacing-xs);
+    }
+
+    .quick-select-buttons .btn-small {
+        width: 100%;
+        padding: var(--spacing-sm);
+        font-size: var(--font-size-xs);
+    }
+
+    /* Log Container - Horizontal Scroll */
+    .log-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        max-width: 100%;
+    }
+
+    .log-table {
+        min-width: 600px;
+        /* Ensure table has minimum width for scrolling */
+        font-size: var(--font-size-sm);
+        /* Improved: Increased from xs (10-11px) to sm (12-13px) for better readability */
+    }
+
+    .log-table th,
+    .log-table td {
+        padding: var(--spacing-sm);
+        font-size: var(--font-size-sm);
+        /* Improved: Increased from xs to sm for better mobile readability */
+    }
+
+    /* Schedule Card - Mobile Optimized */
+    .schedule-card {
+        padding: 12px;
+        /* Compact: Reduced from md (16px) to 12px for slimmer cards (-25% padding) */
+        border-width: 1px;
+        /* Compact: Reduced from 2px to 1px for lighter visual weight (-50% border) */
+        box-shadow: var(--shadow-sm);
+        /* Compact: Reduced from md to sm for lighter appearance */
+    }
+
+    .schedule-card-header {
+        flex-wrap: wrap;
+        gap: var(--spacing-sm);
+        margin-bottom: 10px;
+        /* Compact: Reduced from md (16px) to 10px for tighter spacing (-37.5%) */
+        padding-bottom: 10px;
+        /* Compact: Reduced from md (16px) to 10px for tighter spacing (-37.5%) */
+        border-bottom-width: 1px;
+        /* Compact: Reduced from 2px to 1px for lighter divider (-50% border) */
+    }
+
+    .schedule-card-title {
+        font-size: var(--font-size-base);
+        flex: 1 1 100%;
+    }
+
+    .schedule-card-badge {
+        flex: 1 1 auto;
+    }
+
+    .schedule-card-body {
+        margin-bottom: 10px;
+        /* Compact: Reduced from md (16px) to 10px for tighter spacing (-37.5%) */
+    }
+
+    .schedule-card-row {
+        flex-wrap: wrap;
+        gap: var(--spacing-sm);
+        /* Improved: Increased from xs (4px) to sm (8px) for better spacing */
+    }
+
+    .schedule-card-label,
+    .schedule-card-value {
+        font-size: var(--font-size-sm);
+        /* Improved: Increased from xs (10-11px) to sm (12-13px) for better readability */
+    }
+
+    .schedule-card-footer {
+        flex-wrap: wrap;
+        gap: var(--spacing-sm);
+        /* Improved: Increased from xs (4px) to sm (8px) for better spacing */
+        margin-top: 10px;
+        /* Compact: Reduced from md (16px) to 10px for tighter spacing (-37.5%) */
+        padding-top: 10px;
+        /* Compact: Reduced from md (16px) to 10px for tighter spacing (-37.5%) */
+    }
+
+    .schedule-card-btn {
+        flex: 1 1 calc(50% - var(--spacing-xs));
+        min-width: 48px;
+        /* Improved: Increased from 44px to 48px for more comfortable touch targets */
+        padding: var(--spacing-sm);
+        font-size: var(--font-size-sm);
+    }
+
+    /* Device Status Items - Prevent Overflow */
+    .device-status-list {
+        width: 100%;
+        overflow-x: hidden;
+    }
+
+    .device-status-item {
+        width: 100%;
+        overflow-x: hidden;
+    }
+
+    .device-status-name {
+        flex: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
+/* Small Mobile Devices (<480px) - Additional Fixes */
+@media (max-width: 479px) {
+
+    /* Preset Load - Single Column */
+    .preset-load {
+        grid-template-columns: 1fr;
+    }
+
+    /* Preset Save - Stack Vertically */
+    .preset-save {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .radio-pill {
+        flex: 1 1 100%;
+        min-width: 100%;
+    }
+
+    /* Checkbox Groups - Single Column */
+    .checkbox-group {
+        grid-template-columns: 1fr;
+    }
+
+    /* Day Checkboxes - 3 Columns on Very Small Screens */
+    .day-checkboxes {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    /* Quick Select Buttons - Stack Vertically */
+    .quick-select-buttons {
+        grid-template-columns: 1fr;
+    }
+
+    .quick-select-buttons .btn-small {
+        width: 100%;
+    }
+}

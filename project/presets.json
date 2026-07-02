@@ -44,5 +44,27 @@
     "rotaryValveTime": "200",
     "blower": "10",
     "blowerTime": "300"
+  },
+  "largePreset1": {
+    "tankNumber": "1",
+    "siloMotorRight": "5",
+    "siloMotorRightTime": "100",
+    "siloMotorLeft": "3",
+    "siloMotorLeftTime": "80",
+    "rotaryValve": "7",
+    "rotaryValveTime": "150",
+    "blower": "4",
+    "blowerTime": "200"
+  },
+  "largePreset2": {
+    "tankNumber": "2",
+    "siloMotorRight": "555",
+    "siloMotorRightTime": "555",
+    "siloMotorLeft": "33",
+    "siloMotorLeftTime": "33",
+    "rotaryValve": "13",
+    "rotaryValveTime": "33",
+    "blower": "33",
+    "blowerTime": "33"
   }
 }

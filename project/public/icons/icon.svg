@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Background -->
+  <rect width="512" height="512" fill="#0F172A" rx="64"/>
+  
+  <!-- Gradient Definition -->
+  <defs>
+    <linearGradient id="iconGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#60A5FA;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3B82F6;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Feeding System Icon - Fish with Feed -->
+  <!-- Fish Body -->
+  <ellipse cx="256" cy="256" rx="120" ry="80" fill="url(#iconGradient)" opacity="0.9"/>
+  
+  <!-- Fish Tail -->
+  <path d="M 136 256 L 80 220 L 80 292 Z" fill="url(#iconGradient)" opacity="0.9"/>
+  
+  <!-- Fish Eye -->
+  <circle cx="320" cy="240" r="12" fill="#0F172A"/>
+  <circle cx="324" cy="236" r="4" fill="#60A5FA"/>
+  
+  <!-- Feed Particles (dots falling) -->
+  <circle cx="256" cy="140" r="8" fill="#34D399"/>
+  <circle cx="280" cy="160" r="6" fill="#34D399"/>
+  <circle cx="232" cy="155" r="7" fill="#34D399"/>
+  <circle cx="260" cy="180" r="5" fill="#34D399"/>
+  <circle cx="240" cy="170" r="6" fill="#34D399"/>
+  
+  <!-- IoT Symbol (wireless waves) -->
+  <path d="M 400 380 Q 400 360 420 360" stroke="#60A5FA" stroke-width="4" fill="none" opacity="0.6"/>
+  <path d="M 400 380 Q 400 340 440 340" stroke="#60A5FA" stroke-width="4" fill="none" opacity="0.4"/>
+  <circle cx="400" cy="380" r="6" fill="#60A5FA"/>
+  
+  <!-- Korean Text "급이" (Feeding) -->
+  <text x="256" y="420" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="#60A5FA" text-anchor="middle">급이</text>
+</svg>
+

@@ -1,0 +1,131 @@
+{
+  "logs": [
+    {
+      "action": "급이 실행",
+      "feederGroup": "1",
+      "status": "success",
+      "details": "상위 모터: 5, 하위 모터: 3, 시간: 60초",
+      "timestamp": "2025-10-27T05:27:05.121Z"
+    },
+    {
+      "action": "급이 실행",
+      "feederGroup": "1",
+      "status": "success",
+      "details": "상위 모터: 5, 하위 모터: 3, 시간: 60초",
+      "timestamp": "2025-10-27T05:56:03.039Z"
+    },
+    {
+      "action": "급이 실행",
+      "feederGroup": "1",
+      "status": "success",
+      "details": "상위 모터: 5, 하위 모터: 3, 시간: 60초",
+      "timestamp": "2025-10-27T06:44:56.578Z"
+    },
+    {
+      "action": "급이 실행",
+      "feederGroup": "1",
+      "status": "success",
+      "details": "상위 모터: 5, 하위 모터: 3, 시간: 60초",
+      "timestamp": "2025-10-27T06:44:56.745Z"
+    },
+    {
+      "action": "급이 실행",
+      "feederGroup": "1",
+      "status": "success",
+      "details": "상위 모터: 5, 하위 모터: 3, 시간: 60초",
+      "timestamp": "2025-10-27T06:44:57.034Z"
+    },
+    {
+      "action": "급이 실행",
+      "feederGroup": "1",
+      "status": "success",
+      "details": "상위 모터: 5, 하위 모터: 3, 시간: 60초",
+      "timestamp": "2025-10-27T06:44:57.236Z"
+    },
+    {
+      "action": "급이 실행",
+      "feederGroup": "1",
+      "status": "success",
+      "details": "상위 모터: 5, 하위 모터: 3, 시간: 60초",
+      "timestamp": "2025-10-27T06:44:57.344Z"
+    },
+    {
+      "action": "급이 실행",
+      "feederGroup": "1",
+      "status": "success",
+      "details": "상위 모터: 5, 하위 모터: 3, 시간: 60초",
+      "timestamp": "2025-10-27T06:44:57.476Z"
+    },
+    {
+      "action": "급이 실행",
+      "feederGroup": "1",
+      "status": "success",
+      "details": "상위 모터: 5, 하위 모터: 3, 시간: 60초",
+      "timestamp": "2025-10-27T06:44:57.694Z"
+    },
+    {
+      "action": "급이 실행",
+      "feederGroup": "1",
+      "status": "success",
+      "details": "상위 모터: 5, 하위 모터: 3, 시간: 60초",
+      "timestamp": "2025-10-27T06:44:57.812Z"
+    },
+    {
+      "action": "급이 실행",
+      "feederGroup": "1",
+      "status": "success",
+      "details": "상위 모터: 5, 하위 모터: 3, 시간: 60초",
+      "timestamp": "2025-10-27T06:44:58.027Z"
+    },
+    {
+      "action": "급이 실행",
+      "feederGroup": "1",
+      "status": "success",
+      "details": "상위 모터: 5, 하위 모터: 3, 시간: 60초",
+      "timestamp": "2025-10-27T06:44:58.366Z"
+    },
+    {
+      "action": "급이 실행",
+      "feederGroup": "1",
+      "status": "success",
+      "details": "상위 모터: 5, 하위 모터: 3, 시간: 60초",
+      "timestamp": "2025-10-27T06:44:58.524Z"
+    },
+    {
+      "action": "급이 실행",
+      "feederGroup": "1",
+      "status": "success",
+      "details": "상위 모터: 5, 하위 모터: 3, 시간: 60초",
+      "timestamp": "2025-10-27T06:45:01.040Z"
+    },
+    {
+      "action": "급이 실행",
+      "feederGroup": "1",
+      "status": "success",
+      "details": "상위 모터: 5, 하위 모터: 3, 시간: 60초",
+      "timestamp": "2025-10-27T06:45:01.310Z"
+    },
+    {
+      "action": "급이 실행",
+      "feederGroup": "1",
+      "status": "success",
+      "details": "상위 모터: 5, 하위 모터: 3, 시간: 60초",
+      "timestamp": "2025-10-27T06:45:19.869Z"
+    },
+    {
+      "action": "급이 실행",
+      "feederGroup": "1",
+      "status": "success",
+      "details": "FeedSet: [{\"outlet\":0,\"quantity\":500,\"time\":600,\"active\":1},{\"outlet\":1,\"quantity\":300,\"time\":600,\"active\":1}]",
+      "timestamp": "2025-11-03T07:27:29.294Z"
+    },
+    {
+      "action": "급이 실행",
+      "feederGroup": "all",
+      "status": "success",
+      "details": "FeedSet: [{\"outlet\":0,\"quantity\":500,\"time\":600,\"active\":1},{\"outlet\":1,\"quantity\":300,\"time\":600,\"active\":1}]",
+      "timestamp": "2025-11-05T04:32:38.184Z"
+    }
+  ],
+  "lastUpdated": "2025-11-05T04:32:38.184Z"
+}

@@ -1,0 +1,34 @@
+{
+  "mtype": "tef_fed",
+  "test": 0,
+  "reservations": [
+    {
+      "SCHEDULE_TIME": "2026-07-02T18:17:00.000Z",
+      "DAY_OF_WEEK": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "RESERVATION_DATA": {
+        "feed_set": [
+          {
+            "outlet": 10,
+            "feed_motor": 1,
+            "scatter_motor": 1,
+            "quantity": 100,
+            "time": 600,
+            "active": 1
+          }
+        ]
+      },
+      "DEL_YN": "N",
+      "NO": 1,
+      "SIZE": 6
+    }
+  ],
+  "lastUpdated": "2026-07-02T04:57:15.043Z"
+}

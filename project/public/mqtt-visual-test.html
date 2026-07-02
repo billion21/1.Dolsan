@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MQTT Visual Feedback Test</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .test-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .test-section h2 {
+            margin-bottom: 15px;
+            color: #ffd700;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+            animation: pulse 2s infinite;
+        }
+
+        .status-connected {
+            background: #00ff00;
+            box-shadow: 0 0 10px #00ff00;
+        }
+
+        .status-disconnected {
+            background: #ff0000;
+            box-shadow: 0 0 10px #ff0000;
+        }
+
+        .status-waiting {
+            background: #ffaa00;
+            box-shadow: 0 0 10px #ffaa00;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .log-container {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+            padding: 15px;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+
+        .log-entry {
+            padding: 5px;
+            margin: 3px 0;
+            border-left: 3px solid #667eea;
+            padding-left: 10px;
+        }
+
+        .log-success {
+            border-left-color: #00ff00;
+            color: #00ff00;
+        }
+
+        .log-error {
+            border-left-color: #ff0000;
+            color: #ff0000;
+        }
+
+        .log-info {
+            border-left-color: #00aaff;
+            color: #00aaff;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        .message-preview {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔌 MQTT Visual Feedback Test</h1>
+
+        <!-- SSE Connection Status -->
+        <div class="test-section">
+            <h2>1. SSE Connection Status</h2>
+            <p>
+                <span class="status-indicator" id="sse-indicator"></span>
+                <span id="sse-status">Connecting...</span>
+            </p>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="sse-messages">0</div>
+                    <div class="stat-label">SSE Messages Received</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="sse-reconnects">0</div>
+                    <div class="stat-label">Reconnection Attempts</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MQTT Command Testing -->
+        <div class="test-section">
+            <h2>2. MQTT Command Testing</h2>
+            <div class="button-group">
+                <button onclick="testFeedingCommand()">Test Feeding Command</button>
+                <button onclick="testRTCSync()">Test RTC Sync</button>
+                <button onclick="clearLogs()">Clear Logs</button>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="commands-sent">0</div>
+                    <div class="stat-label">Commands Sent</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="commands-success">0</div>
+                    <div class="stat-label">Successful</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="commands-failed">0</div>
+                    <div class="stat-label">Failed</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Real-time Event Log -->
+        <div class="test-section">
+            <h2>3. Real-time Event Log</h2>
+            <div class="log-container" id="event-log">
+                <div class="log-entry log-info">Waiting for events...</div>
+            </div>
+        </div>
+
+        <!-- Last Message Preview -->
+        <div class="test-section">
+            <h2>4. Last SSE Message</h2>
+            <div class="message-preview" id="last-message">No messages yet</div>
+        </div>
+    </div>
+
+    <script>
+        let eventSource = null;
+        let stats = {
+            sseMessages: 0,
+            sseReconnects: 0,
+            commandsSent: 0,
+            commandsSuccess: 0,
+            commandsFailed: 0
+        };
+
+        // Initialize SSE connection
+        function initSSE() {
+            addLog('Initializing SSE connection...', 'info');
+            
+            eventSource = new EventSource('/api/status-stream');
+            
+            eventSource.onopen = () => {
+                addLog('SSE connection established', 'success');
+                updateSSEStatus('connected');
+            };
+            
+            eventSource.onmessage = (event) => {
+                stats.sseMessages++;
+                updateStats();
+                
+                try {
+                    const data = JSON.parse(event.data);
+                    addLog(`SSE Message: ${JSON.stringify(data)}`, 'info');
+                    document.getElementById('last-message').textContent = JSON.stringify(data, null, 2);
+                    
+                    // Handle different message types
+                    if (data.type === 'log') {
+                        addLog(`Operation Log: ${data.log.action}`, 'success');
+                    } else if (data.act_id) {
+                        addLog(`Status Update: act_id=${data.act_id}, timeout=${data.timeout}`, 'info');
+                    }
+                } catch (e) {
+                    addLog(`Failed to parse SSE message: ${e.message}`, 'error');
+                }
+            };
+            
+            eventSource.onerror = () => {
+                addLog('SSE connection error, reconnecting...', 'error');
+                updateSSEStatus('disconnected');
+                stats.sseReconnects++;
+                updateStats();
+            };
+        }
+
+        // Update SSE status indicator
+        function updateSSEStatus(status) {
+            const indicator = document.getElementById('sse-indicator');
+            const statusText = document.getElementById('sse-status');
+            
+            if (status === 'connected') {
+                indicator.className = 'status-indicator status-connected';
+                statusText.textContent = 'Connected';
+            } else if (status === 'disconnected') {
+                indicator.className = 'status-indicator status-disconnected';
+                statusText.textContent = 'Disconnected';
+            } else {
+                indicator.className = 'status-indicator status-waiting';
+                statusText.textContent = 'Connecting...';
+            }
+        }
+
+        // Update statistics display
+        function updateStats() {
+            document.getElementById('sse-messages').textContent = stats.sseMessages;
+            document.getElementById('sse-reconnects').textContent = stats.sseReconnects;
+            document.getElementById('commands-sent').textContent = stats.commandsSent;
+            document.getElementById('commands-success').textContent = stats.commandsSuccess;
+            document.getElementById('commands-failed').textContent = stats.commandsFailed;
+        }
+
+        // Add log entry
+        function addLog(message, type = 'info') {
+            const logContainer = document.getElementById('event-log');
+            const timestamp = new Date().toLocaleTimeString('ko-KR');
+            const entry = document.createElement('div');
+            entry.className = `log-entry log-${type}`;
+            entry.textContent = `[${timestamp}] ${message}`;
+            logContainer.insertBefore(entry, logContainer.firstChild);
+            
+            // Keep only last 50 entries
+            while (logContainer.children.length > 50) {
+                logContainer.removeChild(logContainer.lastChild);
+            }
+        }
+
+        // Test feeding command
+        async function testFeedingCommand() {
+            stats.commandsSent++;
+            updateStats();
+            addLog('Sending test feeding command...', 'info');
+            
+            try {
+                const response = await fetch('/api/schedules/execute', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        feederGroup: '1',
+                        upperMotor: 5,
+                        lowerMotor: 3,
+                        operationDuration: 60
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    stats.commandsSuccess++;
+                    addLog(`Feeding command successful: ${data.commandsSent} commands sent`, 'success');
+                } else {
+                    stats.commandsFailed++;
+                    addLog(`Feeding command failed: ${data.error}`, 'error');
+                }
+            } catch (error) {
+                stats.commandsFailed++;
+                addLog(`Error sending feeding command: ${error.message}`, 'error');
+            }
+            
+            updateStats();
+        }
+
+        // Test RTC sync
+        async function testRTCSync() {
+            stats.commandsSent++;
+            updateStats();
+            addLog('Testing RTC sync...', 'info');
+            
+            try {
+                const response = await fetch('/api/rtc/board');
+                const data = await response.json();
+                
+                if (data.success) {
+                    stats.commandsSuccess++;
+                    addLog(`RTC sync successful: ${JSON.stringify(data.data)}`, 'success');
+                } else {
+                    stats.commandsFailed++;
+                    addLog(`RTC sync failed: ${data.error}`, 'error');
+                }
+            } catch (error) {
+                stats.commandsFailed++;
+                addLog(`Error during RTC sync: ${error.message}`, 'error');
+            }
+            
+            updateStats();
+        }
+
+        // Clear logs
+        function clearLogs() {
+            document.getElementById('event-log').innerHTML = '<div class="log-entry log-info">Logs cleared</div>';
+            addLog('Logs cleared by user', 'info');
+        }
+
+        // Initialize on page load
+        window.addEventListener('load', () => {
+            initSSE();
+            addLog('Visual feedback test initialized', 'success');
+        });
+
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', () => {
+            if (eventSource) {
+                eventSource.close();
+            }
+        });
+    </script>
+</body>
+</html>
+

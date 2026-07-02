@@ -1,0 +1,1358 @@
+/* ===================================
+   IoT Feeding System - Dashboard Layout
+   Three-Panel Design with Sensor Header
+   =================================== */
+
+/* CSS Variables - Premium Dark Theme Design System */
+:root {
+    /* Background Colors - Dark Theme Palette */
+    --bg-primary: #0F172A;
+    /* Deep slate for main backgrounds */
+    --bg-secondary: #1E293B;
+    /* Lighter slate for secondary backgrounds */
+    --bg-tertiary: #334155;
+    /* Medium slate for tertiary backgrounds */
+    --bg-hover: #475569;
+    /* Hover state background */
+    --bg-elevated: #1E293B;
+    /* Elevated surfaces (cards, modals) */
+    --bg-overlay: rgba(0, 0, 0, 0.4);
+    /* Dark overlay for depth */
+
+    /* Border Colors - Dark Theme Gray Scale */
+    --border-light: #334155;
+    /* Subtle borders for dark theme */
+    --border-medium: #475569;
+    /* Medium borders for dark theme */
+    --border-dark: #64748B;
+    /* Darker borders for emphasis */
+    --border-focus: #60A5FA;
+    /* Focus state border (lighter blue) */
+
+    /* Text Colors - Dark Theme Typography */
+    --text-primary: #F1F5F9;
+    /* Primary text - light slate */
+    --text-secondary: #CBD5E1;
+    /* Secondary text - medium light slate */
+    --text-muted: #94A3B8;
+    /* Muted text - balanced slate */
+    --text-inverse: #0F172A;
+    /* Dark text for light backgrounds */
+    --text-link: #60A5FA;
+    /* Link color (lighter blue) */
+
+    /* Accent Colors - Dark Theme Optimized */
+    --accent-primary: #60A5FA;
+    /* Lighter blue for dark backgrounds */
+    --accent-primary-hover: #3B82F6;
+    /* Slightly darker blue for hover */
+    --accent-primary-light: #1E3A8A;
+    /* Dark blue background */
+    --accent-success: #34D399;
+    /* Lighter emerald green for dark backgrounds */
+    --accent-success-hover: #10B981;
+    /* Slightly darker green for hover */
+    --accent-success-light: #064E3B;
+    /* Dark green background */
+    --accent-warning: #FBBF24;
+    /* Lighter amber for dark backgrounds */
+    --accent-warning-hover: #F59E0B;
+    /* Slightly darker amber for hover */
+    --accent-warning-light: #78350F;
+    /* Dark amber background */
+    --accent-danger: #F87171;
+    /* Lighter red for dark backgrounds */
+    --accent-danger-hover: #EF4444;
+    /* Slightly darker red for hover */
+    --accent-danger-light: #7F1D1D;
+    /* Dark red background */
+    --accent-info: #22D3EE;
+    /* Lighter cyan for dark backgrounds */
+    --accent-purple: #A78BFA;
+    /* Lighter purple for dark backgrounds */
+
+    /* Gradient Definitions - Dark Theme Gradients */
+    --gradient-primary: linear-gradient(135deg, #60A5FA 0%, #3B82F6 100%);
+    --gradient-success: linear-gradient(135deg, #34D399 0%, #10B981 100%);
+    --gradient-subtle: linear-gradient(180deg, #1E293B 0%, #0F172A 100%);
+    --gradient-header: linear-gradient(180deg, #1E293B 0%, #0F172A 100%);
+
+    /* Shadow Definitions - Dark Theme Depth System */
+    --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.4), 0 1px 2px -1px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -4px rgba(0, 0, 0, 0.5);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+    --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+    --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+    --shadow-focus: 0 0 0 3px rgba(96, 165, 250, 0.3);
+
+    /* Spacing - Refined Scale */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+    --spacing-2xl: 48px;
+    --spacing-3xl: 64px;
+
+    /* Border Radius - Premium Curves */
+    --radius-xs: 4px;
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --radius-xl: 18px;
+    --radius-2xl: 24px;
+    --radius-full: 9999px;
+
+    /* Transitions - Smooth Animations */
+    --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: 500ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    /* Typography Scale - Fluid Responsive Typography */
+    --font-size-xs: clamp(10px, 0.8vw, 11px);
+    --font-size-sm: clamp(12px, 1vw, 13px);
+    --font-size-base: clamp(14px, 1.2vw, 16px);
+    --font-size-lg: clamp(15px, 1.4vw, 18px);
+    --font-size-xl: clamp(16px, 1.6vw, 20px);
+    --font-size-2xl: clamp(20px, 2vw, 24px);
+    --font-size-3xl: clamp(24px, 2.5vw, 30px);
+
+    /* Font Weights */
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+
+    /* Letter Spacing */
+    --letter-spacing-tight: -0.025em;
+    --letter-spacing-normal: 0em;
+    --letter-spacing-wide: 0.025em;
+
+    /* Responsive Breakpoints */
+    --breakpoint-mobile: 768px;
+    --breakpoint-tablet: 1024px;
+    --breakpoint-desktop: 1440px;
+
+    /* Touch Target Sizes */
+    --touch-target-min: 44px;
+    --touch-target-comfortable: 48px;
+}
+
+/* Reset & Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Malgun Gothic', '맑은 고딕', 'Apple SD Gothic Neo', sans-serif;
+    background: var(--gradient-subtle);
+    background-attachment: fixed;
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: var(--font-size-base);
+}
+
+/* ===================================
+   Top Header: Sensor Monitoring
+   =================================== */
+.sensor-header {
+    background: var(--gradient-header);
+    padding: var(--spacing-lg) var(--spacing-xl);
+    border-bottom: 1px solid var(--border-light);
+    box-shadow: var(--shadow-md);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(8px);
+}
+
+.header-content {
+    max-width: 1920px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-xl);
+}
+
+.system-title {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+    margin: 0;
+    white-space: nowrap;
+    letter-spacing: var(--letter-spacing-tight);
+    background: linear-gradient(135deg, #1F2937 0%, #374151 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Sensor Display */
+.sensor-display {
+    display: flex;
+    gap: var(--spacing-xl);
+    flex: 1;
+    justify-content: center;
+}
+
+.sensor-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-md) var(--spacing-lg);
+    background-color: var(--bg-elevated);
+    border-radius: var(--radius-lg);
+    min-width: 130px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-light);
+    transition: all var(--transition-base);
+}
+
+.sensor-item:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.sensor-label {
+    font-size: var(--font-size-xs);
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: var(--letter-spacing-wide);
+}
+
+.sensor-value {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--accent-success);
+    font-family: 'SF Mono', 'Consolas', 'Monaco', monospace;
+    letter-spacing: var(--letter-spacing-tight);
+}
+
+/* RTC Controls */
+.rtc-controls {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+    padding: var(--spacing-md) var(--spacing-lg);
+    background-color: var(--bg-elevated);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-light);
+    transition: all var(--transition-base);
+}
+
+.rtc-controls:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.rtc-time-display {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.time-row {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.time-label {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    min-width: 90px;
+    font-weight: var(--font-weight-medium);
+}
+
+.time-value {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+    font-family: 'SF Mono', 'Consolas', 'Monaco', monospace;
+    min-width: 80px;
+    letter-spacing: var(--letter-spacing-tight);
+}
+
+/* Time Input Group */
+.time-input-group {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.time-input {
+    width: 50px;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    font-family: 'SF Mono', 'Consolas', 'Monaco', monospace;
+    text-align: center;
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    transition: all var(--transition-base);
+}
+
+.time-input:hover {
+    border-color: var(--accent-primary);
+    background-color: var(--bg-secondary);
+}
+
+.time-input:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    background-color: var(--bg-secondary);
+    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+}
+
+/* Manual input state - visual indicator */
+.time-input.manual-input {
+    border-color: var(--accent-warning);
+    background-color: rgba(251, 191, 36, 0.05);
+    box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.1);
+}
+
+.time-input.manual-input:focus {
+    border-color: var(--accent-warning);
+    box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.15);
+}
+
+.time-input::placeholder {
+    color: var(--text-tertiary);
+}
+
+/* Remove spinner arrows from number inputs */
+.time-input::-webkit-outer-spin-button,
+.time-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.time-input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.time-separator {
+    font-size: var(--font-size-base);
+    color: var(--text-secondary);
+    font-weight: var(--font-weight-medium);
+    user-select: none;
+}
+
+.sync-status {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: 6px 12px;
+    border-radius: var(--radius-md);
+    background-color: var(--bg-tertiary);
+    border: 1px solid var(--border-light);
+}
+
+.sync-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--text-muted);
+}
+
+.sync-indicator.synced {
+    background-color: var(--accent-success);
+    box-shadow: 0 0 0 2px var(--accent-success-light);
+}
+
+.sync-indicator.minor-drift {
+    background-color: var(--accent-warning);
+    box-shadow: 0 0 0 2px var(--accent-warning-light);
+}
+
+.sync-indicator.major-drift {
+    background-color: var(--accent-danger);
+    box-shadow: 0 0 0 2px var(--accent-danger-light);
+}
+
+.sync-text {
+    font-size: 11px;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.rtc-buttons {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+/* ===================================
+   Main Dashboard: Three-Panel Layout
+   =================================== */
+.dashboard-container {
+    display: grid;
+    grid-template-columns: 300px 1fr 340px;
+    gap: var(--spacing-lg);
+    padding: var(--spacing-xl);
+    max-width: 1920px;
+    margin: 0 auto;
+    height: calc(100vh - 140px);
+}
+
+/* Panel Base Styles */
+.panel {
+    background-color: var(--bg-elevated);
+    border-radius: var(--radius-xl);
+    /* allow inner content to manage its own scrolling */
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border-light);
+    transition: all var(--transition-base);
+    /* critical for flex children with overflow-y:auto to be scrollable */
+    min-height: 0;
+}
+
+.panel:hover {
+    box-shadow: var(--shadow-xl);
+    transform: translateY(-2px);
+}
+
+.panel-header {
+    background: linear-gradient(180deg, var(--bg-elevated) 0%, var(--bg-secondary) 100%);
+    padding: var(--spacing-lg) var(--spacing-xl);
+    border-bottom: 1px solid var(--border-light);
+    position: relative;
+}
+
+.panel-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: var(--spacing-xl);
+    right: var(--spacing-xl);
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-primary) 0%, transparent 100%);
+    opacity: 0.3;
+}
+
+.panel-header h2 {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+    margin: 0;
+    letter-spacing: var(--letter-spacing-tight);
+}
+
+/* Collapsible Panel Header */
+.collapsible-header {
+    cursor: default;
+    /* Pointer cursor only on mobile - disabled on desktop */
+    user-select: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color var(--transition-base);
+}
+
+/* Hover effects disabled on desktop - only active on mobile */
+/* See mobile media query for hover/active states */
+
+.collapse-icon {
+    font-size: var(--font-size-lg);
+    color: var(--text-secondary);
+    transition: transform var(--transition-base);
+    user-select: none;
+    display: none;
+    /* Hidden on desktop, shown on mobile */
+}
+
+.collapsible-header.collapsed .collapse-icon {
+    transform: rotate(-90deg);
+}
+
+/* Collapsed Panel Content */
+.panel-content[data-panel-content] {
+    max-height: 5000px;
+    overflow-y: auto;
+    transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+    opacity: 1;
+}
+
+.panel-content[data-panel-content].collapsed {
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.3s ease-in, opacity 0.2s ease-in;
+}
+
+/* Tab Navigation - Collapsible */
+.tab-navigation[data-panel-content] {
+    max-height: 5000px;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+    opacity: 1;
+}
+
+.tab-navigation[data-panel-content].collapsed {
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.3s ease-in, opacity 0.2s ease-in;
+}
+
+/* Tab Content Container - Collapsible */
+.tab-content-container[data-panel-content] {
+    max-height: 5000px;
+    overflow-y: auto;
+    transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+    opacity: 1;
+}
+
+.tab-content-container[data-panel-content].collapsed {
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.3s ease-in, opacity 0.2s ease-in;
+}
+
+.panel-content {
+    padding: var(--spacing-xl);
+    overflow-y: auto;
+    flex: 1;
+    background-color: var(--bg-primary);
+    /* important for nested flex layouts so that this area can actually scroll */
+    min-height: 0;
+}
+
+/* Left Panel: Large Feeder Control */
+.panel-left {
+    background-color: var(--bg-elevated);
+}
+
+.panel-left .panel-header::after {
+    background: linear-gradient(90deg, var(--accent-primary) 0%, transparent 100%);
+}
+
+/* Center Panel: Small Feeder Control */
+.panel-center {
+    background-color: var(--bg-elevated);
+}
+
+.panel-center .panel-header::after {
+    background: linear-gradient(90deg, var(--accent-success) 0%, transparent 100%);
+}
+
+/* Right Panel: Schedule Viewing & Logs */
+.panel-right {
+    background-color: var(--bg-elevated);
+}
+
+.panel-right .panel-header::after {
+    background: linear-gradient(90deg, var(--accent-purple) 0%, transparent 100%);
+}
+
+/* ===================================
+   Tab Navigation (Center Panel)
+   =================================== */
+.tab-navigation {
+    display: flex;
+    background-color: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-light);
+    padding: 0 var(--spacing-md);
+    gap: var(--spacing-xs);
+}
+
+.tab-btn {
+    flex: 1;
+    padding: var(--spacing-md) var(--spacing-lg);
+    background-color: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    border-bottom: 3px solid transparent;
+    position: relative;
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+}
+
+.tab-btn:hover {
+    background-color: var(--bg-hover);
+    color: var(--text-primary);
+}
+
+.tab-btn.active {
+    background-color: var(--bg-primary);
+    color: var(--accent-primary);
+    border-bottom-color: var(--accent-primary);
+    font-weight: var(--font-weight-semibold);
+    box-shadow: var(--shadow-sm);
+}
+
+.tab-btn.active::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--gradient-primary);
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+}
+
+/* Tab Content */
+.tab-content-container {
+    flex: 1;
+    overflow-y: auto;
+    background-color: var(--bg-primary);
+    /* allow this container to shrink inside the center panel so that it can scroll */
+    min-height: 0;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* ===================================
+   Section Titles
+   =================================== */
+.section-title {
+    font-size: 14px;
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-md);
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border-light);
+    letter-spacing: var(--letter-spacing-tight);
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 40px;
+    height: 1px;
+    background: var(--gradient-primary);
+}
+
+/* ===================================
+   Placeholder Text
+   =================================== */
+.placeholder-text {
+    color: var(--text-muted);
+    font-style: italic;
+    font-size: var(--font-size-sm);
+    text-align: center;
+    padding: var(--spacing-xl);
+    background-color: var(--bg-secondary);
+    border-radius: var(--radius-md);
+}
+
+/* ===================================
+   Info Sections (Right Panel)
+   =================================== */
+.info-section {
+    margin-bottom: var(--spacing-lg);
+}
+
+.info-section:last-child {
+    margin-bottom: 0;
+}
+
+.active-schedule {
+    background-color: var(--bg-secondary);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    min-height: 100px;
+    border: 1px solid var(--border-light);
+}
+
+/* ===================================
+   Responsive Design
+   =================================== */
+@media (max-width: 1400px) {
+    .dashboard-container {
+        grid-template-columns: 240px 1fr 280px;
+    }
+
+    .sensor-display {
+        gap: var(--spacing-md);
+    }
+}
+
+@media (max-width: 1024px) {
+    .dashboard-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+        height: auto;
+    }
+
+    .panel {
+        min-height: 400px;
+    }
+
+    .sensor-display {
+        flex-wrap: wrap;
+    }
+
+    .header-content {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+
+/* ===================================
+   RESPONSIVE DESIGN - MOBILE FIRST
+   Breakpoints: Mobile <768px, Tablet 768-1024px, Desktop >1024px
+   =================================== */
+
+/* ===================================
+   Mobile Devices (<768px)
+   =================================== */
+@media (max-width: 767px) {
+
+    /* Global Mobile Overflow Prevention */
+    body {
+        overflow-x: hidden;
+        max-width: 100vw;
+    }
+
+    .dashboard-wrapper {
+        overflow-x: hidden;
+        max-width: 100vw;
+    }
+
+    /* Header - Mobile Optimization */
+    .sensor-header {
+        padding: var(--spacing-sm) var(--spacing-md);
+        position: relative;
+        overflow-x: hidden;
+    }
+
+    .header-content {
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--spacing-md);
+    }
+
+    .system-title {
+        font-size: clamp(18px, 5vw, 20px);
+        text-align: center;
+        white-space: normal;
+    }
+
+    /* Sensor Display - Stack Vertically */
+    .sensor-display {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+        width: 100%;
+    }
+
+    .sensor-item {
+        flex-direction: row;
+        justify-content: space-between;
+        min-width: 100%;
+        padding: var(--spacing-md);
+        box-shadow: var(--shadow-xs);
+    }
+
+    .sensor-item:hover {
+        transform: none;
+    }
+
+    .sensor-label {
+        font-size: var(--font-size-sm);
+        text-align: left;
+    }
+
+    .sensor-value {
+        font-size: var(--font-size-xl);
+    }
+
+    /* RTC Controls - Mobile Layout */
+    .rtc-controls {
+        flex-direction: column;
+        gap: var(--spacing-md);
+        padding: var(--spacing-md);
+    }
+
+    .rtc-time-display {
+        width: 100%;
+    }
+
+    .rtc-buttons {
+        width: 100%;
+    }
+
+    .rtc-buttons .btn {
+        width: 100%;
+        min-height: var(--touch-target-min);
+    }
+
+    /* Dashboard Container - Stack Panels */
+    .dashboard-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        gap: var(--spacing-md);
+        padding: var(--spacing-md);
+        height: auto;
+        /* Critical: Prevent horizontal overflow */
+        overflow-x: hidden;
+        width: 100%;
+        max-width: 100vw;
+    }
+
+    /* Panels - Full Width on Mobile */
+    .panel {
+        min-height: auto;
+        border-radius: var(--radius-lg);
+        /* Critical: Prevent horizontal overflow */
+        overflow-x: hidden;
+        overflow-y: visible;
+        /* Ensure panels fill container width */
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .panel-header {
+        padding: var(--spacing-lg);
+        /* Improved: Increased from md (16px) to lg (24px) for more prominence */
+        /* Prevent header overflow */
+        overflow-x: hidden;
+        max-width: 100%;
+    }
+
+    .panel-header h2 {
+        font-size: var(--font-size-xl);
+        /* Improved: Increased from lg (15-18px) to xl (16-20px) for better hierarchy */
+        font-weight: var(--font-weight-semibold);
+        /* Improved: Added semibold weight (600) for more prominence */
+        /* Prevent text overflow */
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    /* Specific Panel Overflow Prevention */
+    .panel-left,
+    .panel-center,
+    .panel-right {
+        overflow-x: hidden;
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .panel-content {
+        padding: 20px;
+        /* Improved: Increased from md (16px) to 20px for more comfortable spacing */
+    }
+
+    /* Tab Navigation - Mobile Optimized */
+    .tab-navigation {
+        flex-wrap: wrap;
+        gap: var(--spacing-sm);
+        /* Improved: Increased from xs (4px) to sm (8px) for better spacing */
+        padding: 12px;
+        /* Improved: Increased from sm (8px) to 12px for more breathing room */
+    }
+
+    .tab-btn {
+        flex: 1 1 calc(50% - var(--spacing-sm));
+        min-width: calc(50% - var(--spacing-sm));
+        padding: var(--spacing-sm) var(--spacing-md);
+        font-size: var(--font-size-sm);
+        min-height: var(--touch-target-comfortable);
+        /* Improved: Increased from 44px to 48px for more comfortable touch targets */
+    }
+
+    /* Section Titles */
+    .section-title {
+        font-size: var(--font-size-xl);
+        /* Improved: Increased from lg (15-18px) to xl (16-20px) for better hierarchy */
+        font-weight: var(--font-weight-semibold);
+        /* Improved: Added semibold weight (600) for more prominence */
+        margin-bottom: var(--spacing-lg);
+        /* Improved: Increased from md (16px) to lg (24px) for better separation */
+    }
+
+    /* Control Groups - Mobile Spacing */
+    .control-group {
+        margin-bottom: var(--spacing-md);
+    }
+
+    .control-row {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+
+    /* Radio Groups - Wrap on Mobile */
+    .radio-group {
+        flex-wrap: wrap;
+        gap: var(--spacing-sm);
+    }
+
+    .radio-label {
+        flex: 1 1 calc(50% - var(--spacing-sm));
+        min-width: calc(50% - var(--spacing-sm));
+        min-height: var(--touch-target-comfortable);
+        /* Improved: Increased from 44px to 48px for more comfortable touch targets */
+        padding: var(--spacing-sm) var(--spacing-md);
+    }
+
+    /* Time Selection - Mobile Grid */
+    .time-selection-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-sm);
+    }
+
+    /* Schedule List - Full Width Cards */
+    .schedule-list {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+
+    /* Next Execution Display */
+    .next-execution-display {
+        padding: var(--spacing-md);
+    }
+
+    /* Placeholder Text */
+    .placeholder-text {
+        font-size: var(--font-size-sm);
+        padding: var(--spacing-lg);
+    }
+
+    /* Status Indicators - Mobile Optimized */
+    .status-indicator {
+        font-size: var(--font-size-xs);
+        padding: var(--spacing-xs) var(--spacing-sm);
+        min-height: 28px;
+    }
+
+    /* Panel Collapsing - Mobile */
+    .panel.collapsed .panel-content {
+        max-height: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+
+    /* Improve Touch Scrolling */
+    .panel-content {
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+    }
+
+    /* Tab Content - Mobile Spacing */
+    .tab-content {
+        padding: 0;
+        /* Remove padding, let panel-content handle it */
+    }
+
+    /* Tab Content Panel Content - Mobile Spacing */
+    .tab-content .panel-content {
+        padding: var(--spacing-md);
+    }
+
+    /* Emergency Stop Button - Prominent on Mobile */
+    .emergency-stop-btn {
+        width: 100%;
+        min-height: 56px;
+        font-size: var(--font-size-lg);
+        font-weight: var(--font-weight-bold);
+    }
+
+    /* Prevent Horizontal Overflow */
+    .panel-content,
+    .tab-content-container,
+    .tab-content {
+        overflow-x: hidden;
+        max-width: 100%;
+    }
+
+    /* Ensure all child elements respect container width */
+    .panel-content>*,
+    .tab-content>* {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+}
+
+/* ===================================
+   Small Mobile Devices (<480px)
+   =================================== */
+@media (max-width: 479px) {
+
+    /* Extra Small Screens - Further Optimization */
+    .sensor-header {
+        padding: var(--spacing-sm);
+    }
+
+    .system-title {
+        font-size: clamp(16px, 5vw, 18px);
+    }
+
+    .sensor-item {
+        padding: var(--spacing-sm) var(--spacing-md);
+    }
+
+    .sensor-value {
+        font-size: var(--font-size-lg);
+    }
+
+    /* Tab Navigation - Stack Vertically */
+    .tab-btn {
+        flex: 1 1 100%;
+        min-width: 100%;
+    }
+
+    /* Radio Groups - Stack Vertically */
+    .radio-label {
+        flex: 1 1 100%;
+        min-width: 100%;
+    }
+
+    /* Time Selection - Single Column */
+    .time-selection-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Reduce Spacing */
+    .dashboard-container {
+        padding: var(--spacing-sm);
+        gap: var(--spacing-sm);
+        /* Ensure overflow prevention on small mobile */
+        overflow-x: hidden;
+        max-width: 100vw;
+    }
+
+    /* Panels - Extra Compact on Small Mobile */
+    .panel {
+        overflow-x: hidden;
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .panel-content {
+        padding: var(--spacing-sm) var(--spacing-md);
+    }
+
+    /* Panel Headers - Compact */
+    .panel-header {
+        padding: var(--spacing-sm) var(--spacing-md);
+    }
+
+    .panel-header h2 {
+        font-size: var(--font-size-base);
+    }
+
+    /* Status Indicators - Extra Compact */
+    .status-indicator {
+        font-size: 10px;
+        padding: 2px 6px;
+        min-height: 24px;
+    }
+
+    /* Tab Content - Compact Spacing */
+    .tab-content {
+        padding: var(--spacing-sm);
+    }
+
+    /* Section Titles - Smaller */
+    .section-title {
+        font-size: var(--font-size-base);
+        margin-bottom: var(--spacing-sm);
+    }
+}
+
+/* ===================================
+   Tablet Devices (768px - 1024px)
+   =================================== */
+@media (min-width: 768px) and (max-width: 1023px) {
+
+    /* Header - Tablet Layout */
+    .header-content {
+        flex-wrap: wrap;
+        gap: var(--spacing-lg);
+    }
+
+    .system-title {
+        flex: 1 1 100%;
+        text-align: center;
+    }
+
+    .sensor-display {
+        flex: 1 1 100%;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        gap: var(--spacing-md);
+    }
+
+    .sensor-item {
+        flex: 1 1 calc(25% - var(--spacing-md));
+        min-width: 140px;
+    }
+
+    .rtc-controls {
+        flex: 1 1 100%;
+        justify-content: center;
+    }
+
+    /* Dashboard - Two Column Layout */
+    .dashboard-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        gap: var(--spacing-lg);
+        padding: var(--spacing-lg);
+        height: auto;
+    }
+
+    /* Panels - Comfortable Tablet Sizing */
+    .panel {
+        min-height: auto;
+    }
+
+    /* Tab Navigation - Comfortable Touch Targets */
+    .tab-btn {
+        padding: var(--spacing-md) var(--spacing-lg);
+        min-height: var(--touch-target-comfortable);
+    }
+
+    /* Schedule List - Two Columns */
+    .schedule-list {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-md);
+    }
+}
+
+/* ===================================
+   Large Tablets (1024px - 1440px)
+   =================================== */
+@media (min-width: 1024px) and (max-width: 1439px) {
+
+    /* Dashboard - Three Column Layout */
+    .dashboard-container {
+        gap: var(--spacing-lg);
+        padding: var(--spacing-lg);
+    }
+
+    /* Schedule List - Two Columns */
+    .schedule-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ===================================
+   Desktop (>1440px)
+   =================================== */
+@media (min-width: 1440px) {
+
+    /* Larger Screens - Optimize Spacing */
+    .dashboard-container {
+        max-width: 1920px;
+        margin: 0 auto;
+        padding: var(--spacing-2xl);
+    }
+
+    .header-content {
+        max-width: 1920px;
+    }
+
+    /* Schedule List - Three Columns */
+    .schedule-list {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* ===================================
+   Touch Device Optimizations
+   =================================== */
+@media (hover: none) and (pointer: coarse) {
+
+    /* Touch-Friendly Interactions */
+    .btn {
+        min-height: var(--touch-target-min);
+        padding: var(--spacing-md) var(--spacing-xl);
+    }
+
+    .input-field {
+        min-height: var(--touch-target-min);
+        padding: var(--spacing-md) var(--spacing-lg);
+        font-size: 16px;
+        /* Prevent zoom on iOS */
+    }
+
+    .radio-label {
+        min-height: var(--touch-target-min);
+    }
+
+    .tab-btn {
+        min-height: var(--touch-target-comfortable);
+    }
+
+    /* Remove Hover Effects on Touch Devices */
+    .sensor-item:hover,
+    .panel:hover,
+    .rtc-controls:hover {
+        transform: none;
+    }
+
+    /* Active States for Touch */
+    .btn:active {
+        transform: scale(0.98);
+    }
+
+    .tab-btn:active {
+        transform: scale(0.97);
+    }
+
+    .radio-label:active {
+        transform: scale(0.98);
+    }
+
+    /* Collapsible Panel Icon - Show on Mobile */
+    .collapse-icon {
+        display: inline;
+    }
+
+    /* Collapsible Panel Header - Enable on Mobile */
+    .collapsible-header {
+        cursor: pointer;
+        /* Enable pointer cursor on mobile */
+    }
+
+    .collapsible-header:hover {
+        background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .collapsible-header:active {
+        background-color: rgba(255, 255, 255, 0.08);
+    }
+}
+
+/* ===================================
+   Mobile Responsive - RTC Controls
+   =================================== */
+@media (max-width: 767px) {
+    .rtc-controls {
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--spacing-md);
+        padding: var(--spacing-md);
+    }
+
+    .rtc-time-display {
+        width: 100%;
+    }
+
+    .time-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-sm);
+    }
+
+    .time-label {
+        font-size: var(--font-size-xs);
+        min-width: auto;
+    }
+
+    .time-input-group {
+        width: 100%;
+        flex-wrap: wrap;
+        gap: var(--spacing-xs);
+    }
+
+    .time-input {
+        flex: 1 1 calc(33.333% - var(--spacing-xs));
+        min-width: 60px;
+        font-size: 16px;
+        /* Prevent iOS zoom */
+        padding: var(--spacing-sm);
+    }
+
+    .time-separator {
+        font-size: var(--font-size-sm);
+        flex: 0 0 auto;
+    }
+
+    .rtc-buttons {
+        width: 100%;
+        display: flex;
+        gap: var(--spacing-sm);
+    }
+
+    .rtc-buttons .btn {
+        flex: 1;
+        min-height: var(--touch-target-min);
+    }
+
+    .rtc-buttons .btn-icon-only {
+        flex: 0 0 var(--touch-target-min);
+        width: var(--touch-target-min);
+    }
+}
+
+/* ===================================
+   Landscape Orientation Optimizations
+   =================================== */
+@media (max-width: 767px) and (orientation: landscape) {
+
+    /* Optimize for Mobile Landscape */
+    .sensor-display {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .sensor-item {
+        flex: 1 1 calc(50% - var(--spacing-sm));
+        min-width: calc(50% - var(--spacing-sm));
+    }
+
+    .dashboard-container {
+        padding: var(--spacing-sm) var(--spacing-md);
+    }
+
+    /* RTC Controls - Horizontal on Landscape */
+    .rtc-controls {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .time-row {
+        flex-direction: row;
+        align-items: center;
+    }
+}
+
+/* ===================================
+   Print Styles
+   =================================== */
+@media print {
+    .sensor-header {
+        position: static;
+    }
+
+    .btn,
+    .tab-navigation {
+        display: none;
+    }
+
+    .panel {
+        break-inside: avoid;
+        box-shadow: none;
+        border: 1px solid var(--border-light);
+    }
+}

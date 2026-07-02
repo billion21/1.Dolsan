@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스마트 양식장 급이 제어 시스템</title>
+
+    <!-- PWA Meta Tags -->
+    <meta name="description" content="IoT 기반 대형/소형 급이기 제어 시스템">
+    <meta name="theme-color" content="#60A5FA">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="급이 시스템">
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- App Icons -->
+    <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/icons/icon-512x512.png">
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png">
+    <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/dashboard.css">
+    <link rel="stylesheet" href="/css/components.css">
+</head>
+
+<body>
+    <!-- Top Header: Sensor Monitoring & RTC -->
+    <header class="sensor-header">
+        <div class="header-content">
+            <h1 class="system-title">센서 모니터링</h1>
+
+            <!-- Sensor Value Display Area -->
+            <div class="sensor-display" id="sensorDisplay">
+                <div class="sensor-item">
+                    <span class="sensor-label">수온</span>
+                    <span class="sensor-value" id="sensor-temp">--°C</span>
+                </div>
+                <div class="sensor-item">
+                    <span class="sensor-label">용존산소</span>
+                    <span class="sensor-value" id="sensor-do">-- mg/L</span>
+                </div>
+                <div class="sensor-item">
+                    <span class="sensor-label">pH</span>
+                    <span class="sensor-value" id="sensor-ph">--</span>
+                </div>
+                <div class="sensor-item">
+                    <span class="sensor-label">탁도</span>
+                    <span class="sensor-value" id="sensor-turbidity">-- NTU</span>
+                </div>
+            </div>
+
+            <!-- RTC Time Sync Controls -->
+            <div class="rtc-controls">
+                <div class="rtc-time-display">
+                    <div class="time-row">
+                        <span class="time-label">시스템 시간:</span>
+                        <div class="time-input-group">
+                            <input type="number" class="time-input" id="timeHours" min="0" max="23" placeholder="00">
+                            <span class="time-separator">시</span>
+                            <input type="number" class="time-input" id="timeMinutes" min="0" max="59" placeholder="00">
+                            <span class="time-separator">분</span>
+                            <input type="number" class="time-input" id="timeSeconds" min="0" max="59" placeholder="00">
+                            <span class="time-separator">초</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="rtc-buttons">
+                    <button class="btn btn-secondary" id="setTimeBtn">시간 설정</button>
+                    <button class="btn btn-warning btn-icon-only" id="resetTimeBtn"
+                        title="시간 초기화 (실제 시간으로 복원)">↻</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Dashboard: Three-Panel Layout -->
+    <main class="dashboard-container">
+        <!-- Left Panel: Large Feeder Control -->
+        <aside class="panel panel-left">
+            <div class="panel-header collapsible-header" data-panel="large-feeder">
+                <h2>대형 급이기 제어</h2>
+                <span class="collapse-icon">▼</span>
+            </div>
+            <div class="panel-content" data-panel-content="large-feeder">
+                <!-- Device Status Display -->
+                <div class="device-status-section">
+                    <h3 class="device-status-title">장치 상태</h3>
+                    <div class="device-status-list">
+                        <div class="device-status-item">
+                            <span class="device-status-name">사일로(우)</span>
+                            <span class="device-status-indicators">
+                                <span class="device-status-dot" id="large-status-1-0" title="작동 중"></span>
+                                <span class="device-status-dot" id="large-status-1-1" title="완료"></span>
+                            </span>
+                        </div>
+                        <div class="device-status-item">
+                            <span class="device-status-name">사일로(좌)</span>
+                            <span class="device-status-indicators">
+                                <span class="device-status-dot" id="large-status-2-0" title="작동 중"></span>
+                                <span class="device-status-dot" id="large-status-2-1" title="완료"></span>
+                            </span>
+                        </div>
+                        <div class="device-status-item">
+                            <span class="device-status-name">로터리 밸브</span>
+                            <span class="device-status-indicators">
+                                <span class="device-status-dot" id="large-status-3-0" title="작동 중"></span>
+                                <span class="device-status-dot" id="large-status-3-1" title="완료"></span>
+                            </span>
+                        </div>
+                        <div class="device-status-item">
+                            <span class="device-status-name">블로워</span>
+                            <span class="device-status-indicators">
+                                <span class="device-status-dot" id="large-status-4-0" title="작동 중"></span>
+                                <span class="device-status-dot" id="large-status-4-1" title="완료"></span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Tank Status Indicator -->
+                    <div class="tank-status-indicator">
+                        <div class="tank-status-left">
+                            <span class="tank-status-label">선택된 수조</span>
+                            <span class="tank-status-badge" id="current-tank-indicator">
+                                <span class="tank-status-number">-</span>
+                            </span>
+                        </div>
+                        <span class="device-status-indicators">
+                            <span class="device-status-dot selector-dot" id="large-status-selector-0"
+                                title="작동 중"></span>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Tank Selection Notification -->
+                <div class="tank-selection-notification" id="tank-selection-notification">
+                    <span class="notification-icon">🎯</span>
+                    <span class="notification-text">수조 <span class="tank-number">?</span>번 선택됨</span>
+                </div>
+
+                <!-- Preset Controls -->
+                <div class="preset-box">
+                    <div class="preset-load">
+                        <button class="preset-btn" id="largePreset1">프리셋 1</button>
+                        <button class="preset-btn" id="largePreset2">프리셋 2</button>
+                        <button class="preset-btn" id="largePreset3">프리셋 3</button>
+                        <button class="preset-btn" id="largePreset4">프리셋 4</button>
+                    </div>
+                    <div class="preset-save">
+                        <span class="preset-save-label">저장 대상:</span>
+                        <label class="radio-pill">
+                            <input type="radio" name="largePreset" value="largePreset1" checked>
+                            <span>1</span>
+                        </label>
+                        <label class="radio-pill">
+                            <input type="radio" name="largePreset" value="largePreset2">
+                            <span>2</span>
+                        </label>
+                        <label class="radio-pill">
+                            <input type="radio" name="largePreset" value="largePreset3">
+                            <span>3</span>
+                        </label>
+                        <label class="radio-pill">
+                            <input type="radio" name="largePreset" value="largePreset4">
+                            <span>4</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Tank Number -->
+                <div class="control-group">
+                    <label class="control-label">수조 번호</label>
+                    <input type="number" class="input-field" id="tankNumber" min="0" max="99">
+                    <span class="input-hint">급이할 수조 번호</span>
+                </div>
+
+                <!-- Silo Motor Right -->
+                <div class="control-group">
+                    <label class="control-label">사일로 모터(우)</label>
+                    <div class="input-row">
+                        <div class="input-col">
+                            <label class="input-sublabel">지연시간 (초)</label>
+                            <input type="number" class="input-field" id="siloMotorRight" min="0">
+                        </div>
+                        <div class="input-col">
+                            <label class="input-sublabel">지속시간</label>
+                            <input type="number" class="input-field" id="siloMotorRightTime" min="0" max="999">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Silo Motor Left -->
+                <div class="control-group">
+                    <label class="control-label">사일로 모터(좌)</label>
+                    <div class="input-row">
+                        <div class="input-col">
+                            <label class="input-sublabel">지연시간 (초)</label>
+                            <input type="number" class="input-field" id="siloMotorLeft" min="0">
+                        </div>
+                        <div class="input-col">
+                            <label class="input-sublabel">지속시간</label>
+                            <input type="number" class="input-field" id="siloMotorLeftTime" min="0" max="999">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rotary Valve -->
+                <div class="control-group">
+                    <label class="control-label">로터리 밸브</label>
+                    <div class="input-row">
+                        <div class="input-col">
+                            <label class="input-sublabel">지연시간 (초)</label>
+                            <input type="number" class="input-field" id="rotaryValve" min="0">
+                        </div>
+                        <div class="input-col">
+                            <label class="input-sublabel">지속시간</label>
+                            <input type="number" class="input-field" id="rotaryValveTime" min="0" max="999">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Blower -->
+                <div class="control-group">
+                    <label class="control-label">블로워</label>
+                    <div class="input-row">
+                        <div class="input-col">
+                            <label class="input-sublabel">지연시간 (초)</label>
+                            <input type="number" class="input-field" id="blower" min="0">
+                        </div>
+                        <div class="input-col">
+                            <label class="input-sublabel">지속시간</label>
+                            <input type="number" class="input-field" id="blowerTime" min="0" max="999">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="submit-buttons">
+                    <button class="btn btn-secondary" id="saveLargePreset">저장</button>
+                    <button class="btn btn-primary" id="startLargeFeeder">시작</button>
+                    <button class="btn btn-danger" id="stopLargeFeeder">긴급 정지</button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Center Panel: Small Feeder Control (1-4번 탭) -->
+        <section class="panel panel-center">
+            <div class="panel-header collapsible-header" data-panel="small-feeder">
+                <h2>소형 급이기 제어 (1-4번 탭)</h2>
+                <span class="collapse-icon">▼</span>
+            </div>
+
+            <!-- Tab Navigation -->
+            <div class="tab-navigation" data-panel-content="small-feeder">
+                <button class="tab-btn active" data-tab="schedule">스케줄 제어</button>
+                <button class="tab-btn" data-tab="sensor">센서 연동 제어</button>
+                <button class="tab-btn" data-tab="manual">수동 제어</button>
+            </div>
+
+            <!-- Tab Content Container -->
+            <div class="tab-content-container" data-panel-content="small-feeder">
+                <!-- Tab 1: Schedule Control (스케줄 제어) -->
+                <div class="tab-content active" id="tab-schedule">
+                    <div class="panel-content">
+                        <h3 class="section-title">스케줄 제어</h3>
+
+                        <!-- Tank Selection (Multiple Selection) -->
+                        <div class="control-group">
+                            <label class="control-label">설정 수조 선택 (중복 선택 가능)</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" class="tank-checkbox" value="0" data-tank="1">
+                                    <span>1번 수조</span>
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" class="tank-checkbox" value="1" data-tank="2">
+                                    <span>2번 수조</span>
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" class="tank-checkbox" value="2" data-tank="3">
+                                    <span>3번 수조</span>
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" class="tank-checkbox" value="3" data-tank="4">
+                                    <span>4번 수조</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Day of Week Selection -->
+                        <div class="control-group">
+                            <label class="control-label">실행 요일 선택</label>
+
+                            <!-- Quick Select Buttons -->
+                            <div class="quick-select-buttons">
+                                <button type="button" class="btn btn-secondary btn-small"
+                                    onclick="dashboardApp.selectAllDays()">매일</button>
+                                <button type="button" class="btn btn-secondary btn-small"
+                                    onclick="dashboardApp.selectWeekdays()">평일</button>
+                                <button type="button" class="btn btn-secondary btn-small"
+                                    onclick="dashboardApp.selectWeekends()">주말</button>
+                            </div>
+
+                            <!-- Day Checkboxes -->
+                            <div class="day-checkboxes">
+                                <label class="day-checkbox-label">
+                                    <input type="checkbox" class="day-checkbox" checked>
+                                    <span>월</span>
+                                </label>
+                                <label class="day-checkbox-label">
+                                    <input type="checkbox" class="day-checkbox" checked>
+                                    <span>화</span>
+                                </label>
+                                <label class="day-checkbox-label">
+                                    <input type="checkbox" class="day-checkbox" checked>
+                                    <span>수</span>
+                                </label>
+                                <label class="day-checkbox-label">
+                                    <input type="checkbox" class="day-checkbox" checked>
+                                    <span>목</span>
+                                </label>
+                                <label class="day-checkbox-label">
+                                    <input type="checkbox" class="day-checkbox" checked>
+                                    <span>금</span>
+                                </label>
+                                <label class="day-checkbox-label">
+                                    <input type="checkbox" class="day-checkbox" checked>
+                                    <span>토</span>
+                                </label>
+                                <label class="day-checkbox-label">
+                                    <input type="checkbox" class="day-checkbox" checked>
+                                    <span>일</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Time Scheduler with Operation Duration -->
+                        <div class="control-group">
+                            <label class="control-label">원하는 급이기 작동 시간 선택</label>
+                            <div class="time-picker-with-duration">
+                                <div class="time-picker">
+                                    <select class="input-field input-small" id="feedingHour">
+                                        <option value="">시간</option>
+                                        <!-- 0-23 hours will be populated by JS -->
+                                    </select>
+                                    <span class="time-separator">:</span>
+                                    <select class="input-field input-small" id="feedingMinute">
+                                        <option value="">분</option>
+                                        <!-- 0-59 minutes will be populated by JS -->
+                                    </select>
+                                    <button class="btn btn-secondary" id="addTimeBtn">추가</button>
+                                </div>
+                                <div class="duration-input-inline">
+                                    <label class="control-label-inline">작동 시간 (초)</label>
+                                    <input type="number" class="input-field input-small" id="operationDuration"
+                                        value="60">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Per-tank Motor Inputs (rendered dynamically by dashboard.js) -->
+                        <div id="motorInputsContainer">
+                            <p class="placeholder-text">수조를 선택하면 모터 설정이 표시됩니다</p>
+                        </div>
+
+                        <!-- Schedule List Display (Moved to bottom) -->
+                        <div class="control-group">
+                            <label class="control-label">설정된 급이 시간</label>
+                            <div class="schedule-list" id="scheduleList">
+                                <span class="placeholder-text">시간을 추가하세요</span>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="button-group">
+                            <button class="btn btn-primary" id="saveScheduleBtn">스케줄 저장</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 2: Sensor Integration (센서 연동 제어) -->
+                <div class="tab-content" id="tab-sensor">
+                    <div class="panel-content">
+                        <h3 class="section-title">센서 연동 제어</h3>
+                        <p class="placeholder-text">센서 임계값 설정 및 사료량 자동 조절 기능</p>
+
+                        <!-- Sensor Enable/Disable -->
+                        <div class="control-group">
+                            <label class="control-label">센서 사용 유무</label>
+                            <div class="sensor-config">
+                                <div class="sensor-row">
+                                    <span>센서 #1</span>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="sensor1Enable">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="sensor-row">
+                                    <span>센서 #2</span>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="sensor2Enable">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="sensor-row">
+                                    <span>센서 #3</span>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="sensor3Enable">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="sensor-row">
+                                    <span>센서 #4</span>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="sensor4Enable">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="info-text">※ 현재 사용 안 함 (향후 용존산소 기반 사료량 조절 기능 예정)</p>
+                    </div>
+                </div>
+
+                <!-- Tab 3: Manual Control (수동 제어) -->
+                <div class="tab-content" id="tab-manual">
+                    <div class="panel-content">
+                        <h3 class="section-title">수동 제어</h3>
+                        <p class="placeholder-text">수동 급이 제어 기능</p>
+
+                        <!-- Emergency Stop -->
+                        <div class="control-group">
+                            <button class="btn btn-danger btn-large" id="emergencyStopBtn">
+                                <span class="btn-icon">⚠</span>
+                                비상 정지
+                            </button>
+                            <p class="info-text">※ 현재 사용 안 함</p>
+                        </div>
+
+                        <!-- Manual Feed Control -->
+                        <div class="control-group">
+                            <label class="control-label">수동 급이 실행</label>
+                            <button class="btn btn-primary btn-block" id="manualFeedBtn" disabled>급이 시작</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Right Panel: Schedule Viewing & Operation Logs -->
+        <aside class="panel panel-right">
+            <div class="panel-header collapsible-header" data-panel="schedule-log">
+                <h2>스케줄 확인 & 동작 로그</h2>
+                <span class="collapse-icon">▼</span>
+            </div>
+            <div class="panel-content" data-panel-content="schedule-log">
+                <!-- 1. Real-time Status (TOP) -->
+                <div class="info-section info-section-scrollable">
+                    <!-- <h3 class="section-title">실시간 동작</h3> 공간 최적화를 위한 제거 -->
+                    <div class="status-grid">
+                        <div class="status-item">
+                            <span class="status-label">1번 수조</span>
+                            <span class="status-indicator" id="status-1">대기</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">2번 수조</span>
+                            <span class="status-indicator" id="status-2">대기</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">3번 수조</span>
+                            <span class="status-indicator" id="status-3">대기</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">4번 수조</span>
+                            <span class="status-indicator" id="status-4">대기</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Horizontal Separator -->
+                <hr class="section-separator">
+
+                <!-- 2. Saved Schedules (MIDDLE) -->
+                <div class="info-section info-section-scrollable">
+                    <h3 class="section-title">저장된 스케줄</h3>
+                    <div class="schedule-list-container" id="scheduleListContainer">
+                        <p class="placeholder-text" id="noSchedulesPlaceholder">저장된 스케줄이 없습니다</p>
+                        <div class="schedule-cards" id="scheduleCards"></div>
+                    </div>
+                </div>
+
+                <!-- Horizontal Separator -->
+                <hr class="section-separator">
+
+                <!-- 3. Operation Log (BOTTOM) -->
+                <div class="info-section info-section-scrollable">
+                    <h3 class="section-title">동작 로그</h3>
+                    <div class="log-container" id="operationLog">
+                        <table class="log-table">
+                            <thead>
+                                <tr>
+                                    <th>시간</th>
+                                    <th>수조</th>
+                                    <th>동작</th>
+                                    <th>상태</th>
+                                </tr>
+                            </thead>
+                            <tbody id="logTableBody">
+                                <tr>
+                                    <td colspan="4" class="placeholder-text">로그가 없습니다</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <!-- JavaScript -->
+    <!-- NOTE: No MQTT library needed - browser uses SSE for real-time updates -->
+    <script src="/js/dashboard.js"></script>
+    <script src="/largeFeederPresetHandler.js"></script>
+
+    <!-- PWA Service Worker Registration -->
+    <script>
+        // Register service worker for PWA functionality
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then((registration) => {
+                        console.log('[PWA] Service Worker registered successfully:', registration.scope);
+
+                        // Check for updates periodically
+                        setInterval(() => {
+                            registration.update();
+                        }, 60000); // Check every minute
+                    })
+                    .catch((error) => {
+                        console.error('[PWA] Service Worker registration failed:', error);
+                    });
+            });
+
+            // Listen for service worker updates
+            navigator.serviceWorker.addEventListener('controllerchange', () => {
+                console.log('[PWA] New service worker activated');
+                // Optionally show a notification to the user
+                if (confirm('새로운 버전이 설치되었습니다. 페이지를 새로고침하시겠습니까?')) {
+                    window.location.reload();
+                }
+            });
+        } else {
+            console.warn('[PWA] Service Workers are not supported in this browser');
+        }
+
+        // PWA Install Prompt
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            // Prevent the mini-infobar from appearing on mobile
+            e.preventDefault();
+            // Stash the event so it can be triggered later
+            deferredPrompt = e;
+            console.log('[PWA] Install prompt available');
+
+            // Optionally show a custom install button
+            // You can add a button to the UI and trigger the install prompt
+        });
+
+        window.addEventListener('appinstalled', () => {
+            console.log('[PWA] App installed successfully');
+            deferredPrompt = null;
+        });
+    </script>
+</body>
+
+</html>
