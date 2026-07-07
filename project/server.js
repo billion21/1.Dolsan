@@ -27,8 +27,8 @@ client.on('packetreceive', (packet) => {
 let stopRequested = false; // Flag to control stopping
 let processRunning = false; // Flag to indicate if the process is running
 let mqttConnected = false; // Flag to indicate MQTT connection status
-// SSE clients for status relay to browsers
-const statusSSEClients = new Set();
+// SSE clients: IP별로 1개만 유지 (Chrome은 새로고침 시 close 이벤트 미발생)
+const statusSSEClients = new Map(); // ip -> res
 
 // ===================================
 // RTC Configuration
@@ -1228,26 +1228,43 @@ app.delete('/api/logs/clear', (req, res) => {
 
 // SSE endpoint: relay DIPSW_1_cv status to browsers
 app.get('/api/status-stream', (req, res) => {
+    const ip = req.ip || req.socket.remoteAddress;
+
+    // 같은 IP의 기존 연결이 있으면 강제 종료 (Chrome 새로고침 시 close 이벤트 미발생 대응)
+    const existing = statusSSEClients.get(ip);
+    if (existing) {
+        try { existing.end(); } catch (e) { /* ignore */ }
+        statusSSEClients.delete(ip);
+        console.log('SSE: closed previous connection for', ip);
+    }
+
     res.setHeader('Content-Type', 'text/event-stream');
     res.setHeader('Cache-Control', 'no-cache');
     res.setHeader('Connection', 'keep-alive');
     res.flushHeaders && res.flushHeaders();
     res.write(': connected\n\n');
 
-    statusSSEClients.add(res);
-    console.log('SSE client connected. Total:', statusSSEClients.size);
+    statusSSEClients.set(ip, res);
+    console.log('SSE client connected:', ip, 'Total:', statusSSEClients.size);
 
-    req.on('close', () => {
-        statusSSEClients.delete(res);
-        console.log('SSE client disconnected. Total:', statusSSEClients.size);
-    });
+    const cleanup = () => {
+        if (statusSSEClients.get(ip) === res) {
+            statusSSEClients.delete(ip);
+            console.log('SSE client disconnected:', ip, 'Total:', statusSSEClients.size);
+        }
+    };
+    res.on('close', cleanup);
+    req.on('close', cleanup);
 });
 
 function broadcastStatus(obj) {
     const data = JSON.stringify(obj);
-    for (const clientRes of statusSSEClients) {
+    for (const [ip, clientRes] of statusSSEClients) {
         try { clientRes.write(`data: ${data}\n\n`); }
-        catch (e) { /* ignore write errors, cleanup on close */ }
+        catch (e) {
+            statusSSEClients.delete(ip);
+            console.log('SSE broadcastStatus: removed dead client', ip);
+        }
     }
 }
 
